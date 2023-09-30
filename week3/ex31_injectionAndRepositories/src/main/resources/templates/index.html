@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Landing Page</title>
+    <style>
+        #form-container {
+        position: relative;
+        padding:400px;
+        text-align:center;
+        }
+        input {
+        width:100%;
+        }
+    </style>
+
+</head>
+<body>
+<div id="form-container">
+    <h1>Please Fill in This Form!</h1>
+<form method="post" action="/processForm">
+  ID: <input type="number" name="id" /><br>
+  Prefix: <input type="text" name="prefix" /><br>
+  Code: <input type="number" name="code" /><br>
+  Name: <input type="text" name="name"/><br>
+  <input type="submit" value="Go!" />
+</form>
+</div>
+</body>
+</html>

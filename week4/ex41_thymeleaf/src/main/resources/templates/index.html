@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ThymeLeaf Demo!</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th>ID</th><th>Prefix</th><th>Code</th><th>Name</th><th>id</th>
+    </tr>
+    <tr th:each="Course:${courseList}">
+    <td th:text="${Course.id}">55</td>
+    <td th:text="${Course.prefix}">PROG</td>
+    <td th:text="${Course.code}">syst13379</td>
+        <td th:text="${Course.name}">191</td>
+
+
+
+    </tr>
+</table>
+<form method="post" action="#" th:action="@{/addCourse}">
+    ID: <input type="number" name="id" /><br>
+    Prefix: <input type="text" name="prefix" /><br>
+    Code: <input type="number" name="code" /><br>
+    Name: <input type="text" name="name" /><br>
+    <input type="submit" value="Add Course!" />
+
+</form>
+
+</body>
+</html>

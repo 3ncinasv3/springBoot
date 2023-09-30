@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<img width="10%" src="../static/img/spring-boot-logo.png" 
+	th:src="@{/img/spring-boot-logo.png}"/>
+	<span style="color:green; font-size:150px;">Simple Site!</span>
+
+
+	<h1 style="color:blue;" th:text="'Today is ' + ${serverDate}">Today's date is somethingErOther!!!</h1>
+	<h2 th:text="'The time is ' + ${serverTime}">Today's time is swhahas</h2>
+
+</body>
+</html>

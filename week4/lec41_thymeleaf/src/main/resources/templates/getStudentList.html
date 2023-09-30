@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<h1>List of Students!</h1>
+	
+	<table>
+		<tr>
+			<th>ID</th><th>Name</th><th>Mark</th><th>Average</th><th>Age</th>
+		</tr>
+		<tr th:each="s : ${studentList}">
+			<td th:text="${s.id}">100</td>
+			<td th:text="${s.name}">Sally</td>
+			<td th:text="${s.marks}">1</td>
+			<td th:text="${s.average}">1</td>
+			<td th:text="${s.age}">1</td>
+		</tr>
+	</table>
+
+
+</body>
+</html>
