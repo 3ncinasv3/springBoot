@@ -1,0 +1,4 @@
+CREATE TABLE student (
+    id LONG PRIMARY KEY AURO_INCREMENT,
+    name VARCHAR(255)
+);
