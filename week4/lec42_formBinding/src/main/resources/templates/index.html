@@ -16,10 +16,10 @@
             background-color: #f8f8f8;
         }
 
-        h1 {
-            margin: 20px 0
-            color:
-        }
+        /*h1 {*/
+        /*    margin: 20px 0*/
+        /*    color:*/
+        /*}*/
 
         .container {
             max-width: 800px;
@@ -50,14 +50,14 @@
             background-color: #fff;
         }
 
-        /*form input[type="submit"] {*/
-        /*    background-color: #007BFF;*/
-        /*    color: #fff;*/
-        /*    padding: 10px 15px;*/
-        /*    border: none;*/
-        /*    border-radius: 5px;*/
-        /*    cursor: pointer;*/
-        /*}*/
+        form input[type="submit"] {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
         form input[type="submit"]:hover {
             background-color: #0056b3;
@@ -147,6 +147,7 @@
     <option th:each="g:*{platforms}" th:value="${g}" th:text="${g}"></option></select><br>
     Price: <input type="number" step="0.01" th:field="*{price}" /><br>
     <input type="submit" value="Add Game!" />
+
 </form>
 </div>
 </body>

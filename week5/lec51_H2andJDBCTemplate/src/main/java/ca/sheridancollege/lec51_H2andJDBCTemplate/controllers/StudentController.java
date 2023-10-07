@@ -9,30 +9,35 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 @Controller
 public class StudentController {
-    List<Student> studentList = new CopyOnWriteArrayList<>();
-
     @Autowired
     private DatabaseAccess da;
+
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("student", new Student());
-        model.addAttribute("studentList", studentList);
+        model.addAttribute("studentList", da.getStudentList());
 //        da.insertStudentHardCoded();
         return "index";
     }
-    @PostMapping("/insertStudent")
-    public String addSong(Model model, @ModelAttribute Student student) {
-        model.addAttribute("student", new Student());
-        model.addAttribute("studentList", studentList);
-        studentList.add(student);
 
+    @PostMapping("/insertStudent")
+    public String addSong(@ModelAttribute Student student) {
         da.insertStudent(student);
+        return "redirect:/";
+    }
+
+    @PostMapping("/filterStudent")
+    public String filterStudent(Model model, @ModelAttribute Student student) {
+        model.addAttribute("studentList", da.filterStudentList(student));
         return "index";
     }
 
+    @PostMapping("/deleteStudent")
+    public String deleteStudent(Model model, @ModelAttribute Student student) {
+        da.deleteStudent(student);
+        model.addAttribute("studentList", da.getStudentList());
+        return "redirect:/";
+    }
 }
