@@ -2,6 +2,7 @@ package ca.sheridancollege.lec51_H2andJDBCTemplate.controllers;
 
 import ca.sheridancollege.lec51_H2andJDBCTemplate.beans.Student;
 import ca.sheridancollege.lec51_H2andJDBCTemplate.database.DatabaseAccess;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +16,7 @@ public class StudentController {
     private DatabaseAccess da;
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(@NotNull Model model) {
         model.addAttribute("student", new Student());
         model.addAttribute("studentList", da.getStudentList());
 //        da.insertStudentHardCoded();
@@ -29,13 +30,13 @@ public class StudentController {
     }
 
     @PostMapping("/filterStudent")
-    public String filterStudent(Model model, @ModelAttribute Student student) {
+    public String filterStudent(@NotNull Model model, @ModelAttribute Student student) {
         model.addAttribute("studentList", da.filterStudentList(student));
         return "index";
     }
 
     @PostMapping("/deleteStudent")
-    public String deleteStudent(Model model, @ModelAttribute Student student) {
+    public String deleteStudent(@NotNull Model model, @ModelAttribute Student student) {
         da.deleteStudent(student);
         model.addAttribute("studentList", da.getStudentList());
         return "redirect:/";
