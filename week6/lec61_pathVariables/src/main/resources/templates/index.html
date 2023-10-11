@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>H2 DATABASE Fun</title>
+    <style>
+        form select {
+            background-color: #fff
+        }
+        form {
+            margin-bottom: 5px;
+        }
+        form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        form input[type="submit"] {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .form-container {
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 10px;
+        }
+        h1, h2 {
+            text-align:center;
+            color: white;
+        }
+
+        body {
+            background-color: #007BFF;
+        }
+
+        /*form select: submit {*/
+
+        /*}*/
+    </style>
+</head>
+<body>
+<h1>Sheridan Student:List</h1>
+<h2>Student Record Keeper</h2>
+<br><hr><br>
+<table th:if="${studentList != null AND studentList != ''}">
+    <tr><th>S. Name</th><th>ID. NO</th><th>ADDRESS</th><th>PhoneNo.</th><th>DEGREE</th></tr>
+    <tr th:each="s : ${studentList}">
+        <td th:text="${s.name}">Frank</td>
+        <td th:text="${s.id}">1</td>
+        <td th:text="${s.address}"></td>
+        <td th:text="${s.phoneNumber}"></td>
+        <td th:text="${s.degree}"></td>
+    </tr>
+</table>
+<br><hr><br>
+<div class="form-container">
+<form method="post" action="" th:action="@{/insertStudent}"
+      th:object="${student}">
+    <input type="hidden" name="id" th:field="*{id}"/>
+    Name: <input type="text" th:field="*{name}" /><br>
+    Address: <input type="text" name="address" th:field="*{address}" /><br>
+    Phone No: <input type="text" name="phoneNumber" th:field="*{phoneNumber}" /><br>
+    Degree: <select th:field="*{degree}">
+    <option th:each="g : ${student.DEGREES}" th:value="${g}" th:text="${g}"></option>
+</select>
+    <input type="submit" value="Go!" />
+</form>
+    <br><hr><br>
+
+    <form method="post" action="" th:action="@{/filterStudent}" th:object="${student}">
+    Filter by Degree: <select th:field="*{degree}">
+<!--        <option th:text ="All" th:value="All"></option>-->
+        <option th:each="g : ${student.DEGREES}" th:value="${g}" th:text="${g}"></option>
+    </select>
+    <input type="submit" value="Go!"/>
+    </form>
+
+    <form method="post" action="" th:action="@{/deleteStudent}" th:object="${student}">
+        Delete by Name:
+        <input type="text" th:field="*{name}">
+        <input type="submit" value="Go!"/>
+    </form>
+
+</div>
+
+</body>
+</html>
