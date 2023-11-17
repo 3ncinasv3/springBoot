@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        a {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+</head>
+<body>
+<div th:if="${session.book_ != null and !session.book_.isEmpty()}">
+    <h2>Your Cart:</h2>
+    <table>
+        <tr>
+            <th>Book ISBN</th>
+            <th>TITLE</th>
+            <th>AUTHOR</th>
+        </tr>
+        <tr th:each="book : ${session.book_}">
+            <td th:text="${book.ISBN}"></td>
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.price}"></td>
+            <td th:text="${book.description}"></td>
+        </tr>
+    </table>
+    <div class="total-price-container">
+        <div th:with="books=${session.book_}">
+            <div th:with="totalPrice=${#aggregates.sum(books.![price])}">
+                <p>Total Price: </p> <div th:text="'$' + ${totalPrice}">
+            </div>
+            </div>
+        </div>
+</div>
+<p><a th:href="@{/secure/index}">Keep Shopping</a></p>
+
+</body>
+</html>

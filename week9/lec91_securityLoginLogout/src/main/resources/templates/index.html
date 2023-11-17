@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Welcome! Staying secure is a pretty big deal!</h1>
+
+<div sec:authorize="isAuthenticated()">
+    User's Name: <span sec:authentication="name"></span><br>
+    Roles: <span sec:authentication="principal.authorities"></span><br><br>
+<div>
+<form method="get" action="#" th:action="@{/logout}">
+    <input type="submit" value="Logout" />
+</form>
+</div>
+</div>
+
+
+</body>
+</html>

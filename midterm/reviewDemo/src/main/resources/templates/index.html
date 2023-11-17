@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Review</title>
+    <style>
+     .form-container {
+         text-align: center;
+     }
+    </style>
+</head>
+<body>
+<h1>Student Appointment List</h1>
+<br><hr><br>
+<table th:if="${appointmentList != null AND appointmentList != ''}">
+    <tr><th>App. ID</th><th>Firstname</th><th>Email</th><th>Date</th><th>Time</th></tr>
+    <tr th:each="a : ${appointmentList}">
+        <td th:text="${a.id}"></td>
+        <td th:text="${a.firstName}"></td>
+        <td th:text="${a.email}"></td>
+        <td th:text="${a.appointmentDate}"></td>
+        <td th:text="${a.appointmentTime}"></td>
+        <td><a th:href="@{'/editAppointment/'} + ${a.id}">Edit</a></td>
+        <td><a th:href="@{'/deleteAppointment/'} + ${a.id}">Delete</a></td>
+    </tr>
+</table>
+<div class="form-container">
+<form method="post" action="/insertAppointment" th:action="@{/insertAppointment}"
+      th:object="${appointment}">
+    Firstname: <input type="text" th:field="*{firstName}" /><br>
+    Email: <input type="text" th:field="*{email}" /><br>
+    Appointment Date: <input type="date" th:field="*{appointmentDate}" /><br>
+    Appointment Time: <input type="time" th:field="*{appointmentTime}" /><br>
+    <input type="hidden" th:field="*{id}" /><br>
+    <input type="submit" value="Submit" />
+</form>
+</div>
+
+</body>
+</html>

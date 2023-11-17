@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../static/js/script.js" th:src="@{/js/script.js}"></script>
+    <style>
+        body {
+            text-align: center;
+            background: url('https://source.unsplash.com/random') center center fixed;
+            background-size: cover;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2 {
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .form-container {
+            width: 70%; /* Adjust the width as needed */
+            max-width: 400px; /* Set a maximum width */
+            margin: 50px auto; /* Center the form horizontally with top margin */
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+
+        .error, .success {
+            color: red;
+            margin-top: 15px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            max-width: 300px;
+            height: 45px;
+            margin-top: 15px;
+            border: 1px solid #ccc;
+            padding: 12px;
+            box-sizing: border-box;
+            border-radius: 8px;
+            font-size: 18px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            max-width: 300px;
+            height: 50px;
+            margin-top: 25px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 20px;
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform effect */
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+            transform: scale(1.05); /* Slightly scale up on hover */
+        }
+    </style>
+</head>
+<body>
+<h1>Register here!</h1>
+<div id="error" class="error"></div>
+<form name="form" action="#" th:action="@{/register}" method="post" onsubmit="return verify()">
+    Email: <input type="email" name="username" /><br>
+    Password: <input type="password" name="password" /><br>
+    Verify Password: <input type="password" name="verifyPassword" /><br>
+<input type="submit" value="Register">
+</form>
+
+
+</body>
+</html>

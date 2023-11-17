@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sessions</title>
+
+</head>
+<body>
+<div th:if="${session.phones != null and !session.phones.isEmpty()}">
+    <h2>Your Cart:</h2>
+    <table>
+        <tr>
+            <th>Phone Model</th>
+            <th>Price</th>
+        </tr>
+        <tr th:each="phone : ${session.phones}">
+            <td th:text="${phone.model}"></td>
+            <td th:text="${phone.price}"></td>
+        </tr>
+    </table>
+</div>
+
+
+
+<form method="post" action="/insertPhone" th:action="@{/insertPhone}" th:object="${phone}">
+    <input type="hidden" name="id" th:field="*{id}"/>
+    Name: <input type="text" name="name" th:field="*{model}" /> <br>
+    Price: <input type="number" name="model" th:field="*{price}" /> <br>
+    <input type="submit" value="Go!" />
+</form>
+
+
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 248 73.91">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fbc13b;
+      }
+
+      .cls-2 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-3 {
+        font-family: MyriadPro-Regular, 'Myriad Pro';
+        font-size: 33px;
+      }
+    </style>
+  </defs>
+  <text class="cls-3" transform="translate(0 65.66)"><tspan x="0" y="0">JOSH</tspan><tspan class="cls-2" x="72.73" y="0">U</tspan><tspan x="92.96" y="0" xml:space="preserve">A  </tspan><tspan class="cls-1" x="127.15" y="0">&amp;</tspan><tspan x="147.11" y="0" xml:space="preserve">   SONS</tspan></text>
+</svg>

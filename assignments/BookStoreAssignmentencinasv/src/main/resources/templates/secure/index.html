@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<!-- Generator: Adobe Illustrator 27.8.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+     viewBox="0 0 1400 28" style="enable-background:new 0 0 600 28;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;}
+    .st1{font-family:'MyriadPro-Regular';}
+    .st2{font-size:33px;}
+    .st3{fill:#FBC13B;}
+</style>
+    <rect class="st0" width="248" height="24.26"/>
+    <text transform="matrix(1 0 0 1 0 23.4297)"><tspan x="0" y="0" class="st1 st2">JOSHUA  </tspan><tspan x="128.27" y="0" class="st3 st1 st2">&amp;</tspan><tspan x="148.23" y="0" class="st1 st2">   SONS</tspan></text>
+</svg>
+<head>
+    <meta charset="UTF-8">
+    <title>Secure Home Page</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        hr {
+            border: 1px solid #ddd;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .cart-container {
+            margin-top: 20px;
+        }
+
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .cart-table th, .cart-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .logout-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .total-price-container {
+            text-align: right;
+        }
+
+        /* Nav Bar Styles */
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        nav li {
+            float: left;
+            display: block;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            color: white;
+            transition: background-color 0.3s;
+        }
+
+        nav li:hover {
+            background-color: #555;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        nav a:hover {
+            color: #FBC13B;
+        }
+
+        /*body {*/
+        /*    font-family: Arial, sans-serif;*/
+        /*    margin: 20px;*/
+        /*    background-color: #f4f4f4;*/
+        /*}*/
+
+        /*div {*/
+        /*    background-color: #fff;*/
+        /*    padding: 20px;*/
+        /*    margin-bottom: 20px;*/
+        /*    border-radius: 8px;*/
+        /*    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
+        /*}*/
+
+        /*h1 {*/
+        /*    color: #333;*/
+        /*}*/
+
+        /*hr {*/
+        /*    border: 1px solid #ddd;*/
+        /*    margin-top: 10px;*/
+        /*    margin-bottom: 20px;*/
+        /*}*/
+
+        /*table {*/
+        /*    width: 100%;*/
+        /*    border-collapse: collapse;*/
+        /*    margin-top: 10px;*/
+        /*}*/
+
+        /*th, td {*/
+        /*    border: 1px solid #ddd;*/
+        /*    padding: 8px;*/
+        /*    text-align: left;*/
+        /*}*/
+
+        /*th {*/
+        /*    background-color: #f2f2f2;*/
+        /*}*/
+
+        /*a {*/
+        /*    color: #007bff;*/
+        /*    text-decoration: none;*/
+        /*    text-align: center;*/
+        /*}*/
+
+        /*a:hover {*/
+        /*    text-decoration: underline;*/
+        /*}*/
+
+        /*.login-links {*/
+        /*    margin-top: 20px;*/
+        /*    text-align: center;*/
+        /*}*/
+
+    </style>
+</head>
+<body>
+<header>
+    <nav>
+    <ul>
+        <li>Harry Potter</li>
+        <li>Star Wars</li>
+        <li>Chronicles of Narnia</li>
+        <li>Logout</li>
+        <li><a th:href="@{/secure/cart}">Check Cart</a></li>
+    </ul>
+    </nav>
+</header>
+<div class="container">
+<h1>Amazindigo!</h1>
+<table th:if="${books != null AND books != ''}">
+    <tr>
+        <th>ISBN</th>
+        <th>Book Name</th>
+        <th>Serial Name</th>
+        <th>Author Name</th>
+        <th>Category</th>
+        <th>Action</th>
+    </tr>
+    <tr th:each="a : ${books}">
+        <td th:text="${a.ISBN}"></td>
+        <td th:text="${a.title}"></td>
+        <td th:text="${a.author}"></td>
+        <td th:text="${a.price}"></td>
+        <td th:text="${a.description}"></td>
+        <td><img th:src="@{${a.imageUrl}}" alt="Book Image" style="max-width: 175px; max-height: 150px;" />
+        </td>
+        <td><a th:href="@{'/secure/addToCart/'} + ${a.ISBN}">Add To Cart</a></td>
+<!--        <td>
+-->
+    </tr>
+</table>
+
+<!--<table th:if="${books != null AND books != ''}">-->
+<!--    <tr><th>ISBN</th><th>Book Name</th><th>Serial Name</th><th>Author Name</th><th>Category</th></tr>-->
+<!--    <tr th:each="a : ${books}">-->
+<!--        <td th:text="${a.ISBN}"></td>-->
+<!--        <td th:text="${a.title}"></td>-->
+<!--        <td th:text="${a.author}"></td>-->
+<!--        <td th:text="${a.price}"></td>-->
+<!--        <td th:text="${a.description}"></td>-->
+<!--        &lt;!&ndash;        <td><a th:href="@{'/secure/editBook/'} + ${a.isbn}">Edit</a></td>&ndash;&gt;-->
+<!--        &lt;!&ndash;        <td><a th:href="@{'/secure/deleteBook/'} + ${a.isbn}">Delete</a></td>&ndash;&gt;-->
+<!--    </tr>-->
+<!--    <tr th:each="a : ${books}">-->
+<!--        <form method="post" th:action="@{/secure/addToCart}">-->
+<!--            &lt;!&ndash; Include input fields for book details, e.g., ISBN, title, etc. &ndash;&gt;-->
+<!--            <input type="hidden" name="isbn" th:value="${a.ISBN}" />-->
+<!--            &lt;!&ndash; Other input fields &ndash;&gt;-->
+
+<!--            <td th:text="${a.ISBN}"></td>-->
+<!--            <td th:text="${a.title}"></td>-->
+<!--            <td th:text="${a.author}"></td>-->
+<!--            <td th:text="${a.price}"></td>-->
+<!--            <td th:text="${a.description}"></td>-->
+<!--            <td>-->
+<!--                <input type="submit" value="Add to Cart" />-->
+<!--            </td>-->
+<!--        </form>-->
+<!--    </tr>-->
+<!--</table>-->
+
+<div th:if="${session.book_ != null and !session.book_.isEmpty()}">
+    <h2>Your Cart:</h2>
+    <table>
+        <tr>
+            <th>Book ISBN</th>
+            <th>TITLE</th>
+            <th>AUTHOR</th>
+            <th>Price</th>
+        </tr>
+        <tr th:each="book : ${session.book_}">
+            <td th:text="${book.ISBN}"></td>
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.price}"></td>
+            <td th:text="${book.description}"></td>
+        </tr>
+    </table>
+
+<!--    <div th:text="${session.book_}"></div>-->
+    <div class="total-price-container">
+        <div th:with="books=${session.book_}">
+            <div th:with="totalPrice=${#aggregates.sum(books.![price])}">
+            <p>Total Price: </p> <div th:text="'$' + ${totalPrice}">
+            </div>
+        </div>
+    </div>
+
+<!--    <div th:text="${session.sessionId}"></div>-->
+
+
+
+
+
+
+    <!--<table th:if="${customers != null AND customers != ''}">-->
+<!--    <tr><th>Username</th><th>Password</th><th>Email</th></tr>-->
+<!--    <tr th:each="b : ${customers}">-->
+<!--        <td th:text="${b.username}"></td>-->
+<!--        <td th:text="${b.password}"></td>-->
+<!--        <td th:text="${b.email}"></td>-->
+<!--        &lt;!&ndash;        <td><a th:href="@{'/secure/editBook/'} + ${a.isbn}">Edit</a></td>&ndash;&gt;-->
+<!--        &lt;!&ndash;        <td><a th:href="@{'/secure/deleteBook/'} + ${a.isbn}">Delete</a></td>&ndash;&gt;-->
+<!--    </tr>-->
+<!--</table>-->
+</div>
+
+<p><a th:href="@{/secure/index}">To secure index</a></p>
+<p><a th:href="@{/}">Back to regular index</a></p>
+<form method="post" th:action="@{/logout}">
+    <input type="submit" value="Logout" />
+</form>
+<div sec:authorize="isAuthenticated()">
+    User's Name: <span sec:authentication="name"></span><br>
+    Roles: <span sec:authentication="principal.authorities"></span><br><br>
+</div>
+</div>
+</div>
+
+</body>
+</html>

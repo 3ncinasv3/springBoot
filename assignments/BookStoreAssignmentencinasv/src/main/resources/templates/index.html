@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 27.8.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+     viewBox="0 0 1400 28" style="enable-background:new 0 0 600 28;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;}
+    .st1{font-family:'MyriadPro-Regular';}
+    .st2{font-size:33px;}
+    .st3{fill:#FBC13B;}
+</style>
+    <rect class="st0" width="248" height="24.26"/>
+    <text transform="matrix(1 0 0 1 0 23.4297)"><tspan x="0" y="0" class="st1 st2">JOSHUA  </tspan><tspan x="128.27" y="0" class="st3 st1 st2">&amp;</tspan><tspan x="148.23" y="0" class="st1 st2">   SONS</tspan></text>
+</svg>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+
+        /* Style for the modal container */
+        .modal-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Style for the modal content */
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        /* Style for the close button */
+        .close {
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        /* Style for the login button */
+        #loginBtn {
+            cursor: pointer;
+        }
+
+        /* Style for the overlay when modal is open */
+        input[type="checkbox"]:checked + .modal-container {
+            display: flex;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        div {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        hr {
+            border: 1px solid #ddd;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .login-links {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* Nav Bar Styles */
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        nav li {
+            float: left;
+            display: block;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            color: white;
+            transition: background-color 0.3s;
+        }
+
+        nav li:hover {
+            background-color: #555;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        nav a:hover {
+            color: #FBC13B;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <header>
+        <nav>
+            <ul>
+                <li>Harry Potter</li>
+                <li>Star Wars</li>
+                <li>Chronicles of Narnia</li>
+<!--                <li>Logout</li>-->
+<!--                <li>Check Cart</li>-->
+            </ul>
+        </nav>
+    </header>
+<h1>
+</h1>
+<br><hr><br>
+<table th:if="${books != null AND books != ''}">
+    <tr><th>ISBN</th><th>Book Name</th><th>Author Name</th><th>Price CAD$</th><th>Category</th></tr>
+    <tr th:each="a : ${books}">
+        <td th:text="${a.ISBN}"></td>
+        <td th:text="${a.title}"></td>
+        <td th:text="${a.author}"></td>
+        <td th:text="${a.price}"></td>
+        <td th:text="${a.description}"></td>
+        <td><img th:src="@{${a.imageUrl}}" alt="Book Image" style="max-width: 100px; max-height: 150px;" />
+        </td>
+<!--        <td><a th:href="@{'/secure/editBook/'} + ${a.isbn}">Edit</a></td>-->
+<!--        <td><a th:href="@{'/secure/deleteBook/'} + ${a.isbn}">Delete</a></td>-->
+    </tr>
+</table>
+
+
+
+
+    <table th:if="${customers != null AND customers != ''}">
+        <tr><th>Username</th><th>Password</th><th>Email</th></tr>
+        <tr th:each="b : ${customers}">
+            <td th:text="${b.username}"></td>
+            <td th:text="${b.password}"></td>
+            <td th:text="${b.email}"></td>
+            <!--        <td><a th:href="@{'/secure/editBook/'} + ${a.isbn}">Edit</a></td>-->
+            <!--        <td><a th:href="@{'/secure/deleteBook/'} + ${a.isbn}">Delete</a></td>-->
+        </tr>
+    </table>
+</div>
+
+<div sec:authorize="!isAuthenticated()">
+    <h1>Please log in to the Bookstore</h1>
+    <div class="login-links">
+    <a th:href="@{login}">Login</a>
+    <a th:href="@{register}">Register</a>
+        User's Name: <span sec:authentication="name"></span><br>
+<!--        Roles: <span sec:authentication="principal.authorities"></span><br><br>-->
+    </div>
+</div>
+
+<!-- Login button -->
+<label for="modalToggle" id="loginBtn">Login</label>
+<input type="checkbox" id="modalToggle" style="display:none">
+
+<!-- Modal container -->
+<div class="modal-container">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <!-- Close button -->
+        <label for="modalToggle" class="close">×</label>
+        <!-- Your login form goes here -->
+        <form>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username">
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+
+            <input type="submit" value="Login">
+        </form>
+    </div>
+</div>
+
+<div sec:authorize="isAuthenticated()">
+    User's Name: <span sec:authentication="name"></span><br>
+    Roles: <span sec:authentication="principal.authorities"></span><br><br>
+    <div>
+        <form method="post" action="#" th:action="@{/logout}">
+            <input type="submit" value="Logout" />
+        </form>
+        <p><a th:href="@{/secure/index}">To secure index</a></p>
+<!--        User's Name: <span sec:authentication="name"></span><br>-->
+<!--        Roles: <span sec:authentication="principal.authorities"></span><br><br>-->
+
+    </div>
+</div>
+<div th:text="${session.sessionId}"></div>
+</body>
+</html>

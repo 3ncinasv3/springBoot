@@ -14,7 +14,7 @@
             background-color: #0056b3;
         }
         form input[type="submit"] {
-            background-color: #007BFF;
+            background-color: #0FFA75;
             color: #fff;
             padding: 10px 15px;
             border: none;
@@ -34,6 +34,11 @@
 
         body {
             background-color: #007BFF;
+            color: white;
+        }
+        table {
+            margin-right: auto;
+            margin-left: auto;
         }
 
         /*form select: submit {*/
@@ -45,6 +50,7 @@
 <h1>Sheridan Student:List</h1>
 <h2>Student Record Keeper</h2>
 <br><hr><br>
+<div id="table-container">
 <table th:if="${studentList != null AND studentList != ''}">
     <tr><th>S. Name</th><th>ID. NO</th><th>ADDRESS</th><th>PhoneNo.</th><th>DEGREE</th></tr>
     <tr th:each="s : ${studentList}">
@@ -53,8 +59,13 @@
         <td th:text="${s.address}"></td>
         <td th:text="${s.phoneNumber}"></td>
         <td th:text="${s.degree}"></td>
+<!--        <td><a th:href="@{'/editStudentById/'} + ${s.id}">Edit</a></td>-->
+        <td><a th:href="@{'/editStudentById/'} + ${s.id}">Edit</a></td>
+        <td><a th:href="@{'/deleteStudentById/'} + ${s.id}">Delete</a></td>
     </tr>
 </table>
+</div>
+
 <br><hr><br>
 <div class="form-container">
 <form method="post" action="" th:action="@{/insertStudent}"
@@ -68,11 +79,10 @@
 </select>
     <input type="submit" value="Go!" />
 </form>
-    <br><hr><br>
+    <br><hr><br
 
     <form method="post" action="" th:action="@{/filterStudent}" th:object="${student}">
-    Filter by Degree: <select th:field="*{degree}">
-<!--        <option th:text ="All" th:value="All"></option>-->
+    Filter by Degree: <select th:field="*{student.degree}">
         <option th:each="g : ${student.DEGREES}" th:value="${g}" th:text="${g}"></option>
     </select>
     <input type="submit" value="Go!"/>
