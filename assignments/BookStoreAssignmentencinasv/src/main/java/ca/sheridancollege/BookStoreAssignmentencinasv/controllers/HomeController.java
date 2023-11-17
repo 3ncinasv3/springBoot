@@ -4,7 +4,7 @@ import ca.sheridancollege.BookStoreAssignmentencinasv.beans.Book;
 //import ca.sheridancollege.BookStoreAssignmentencinasv.beans.Customer;
 import ca.sheridancollege.BookStoreAssignmentencinasv.database.DatabaseAccess;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -41,8 +41,8 @@ public class HomeController {
 //        model.addAttribute("currentPage", page);
 //        model.addAttribute("pageSize", pageSize);
 //        session.setAttribute
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userId = authentication.getName();
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String userId = authentication.getName();
 //        session.getAttribute("book_" + userId);
 //        model.addAttribute("user")
         return "index";
@@ -120,7 +120,7 @@ public class HomeController {
     public String postRegister(@RequestParam String username, @RequestParam String password) {
         da.addUser(username, password);
         Long userId = da.findUserAccount(username).getUserId();
-        da.addRole(userId, Long.valueOf(1));
+        da.addRole(userId, 1L);
         return "redirect:/";
     }
 

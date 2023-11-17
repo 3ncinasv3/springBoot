@@ -7,7 +7,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 //import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
@@ -16,7 +18,7 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 
 @EnableWebSecurity
-@SuppressWarnings("All")
+//@SuppressWarnings("All")
 @Configuration
 public class SecurityConfig {
 //    @Autowired
@@ -44,11 +46,16 @@ public class SecurityConfig {
                 )
                 .csrf(csrf -> csrf.ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).disable())
 //                         .headers(headers -> headers.frameOptions(FrameOptionsConfig::disable))
-                .headers(headers -> headers.frameOptions().disable())
+                .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
+//                .headers(headers -> headers.frameOptions().disable())
+                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
+//                        .formLogin(form -> form.loginPage("/login").permitAll())
                         .formLogin(form -> form.loginPage("/login").permitAll())
                         .exceptionHandling(exception -> exception.accessDeniedPage("/permission-denied"))
                         .logout(LogoutConfigurer::permitAll)
                         .build();
+
+
                     }
 }
 
@@ -75,7 +82,7 @@ public class SecurityConfig {
 //        this.da = da;
 //    }
 //    @Bean
-//    public InMemoryUserDetailsManager userDetailsService (PasswordEncoder passwordEncoder) {
+//    public InMemoryUserDetailsManager userDetailsService ( PasswordEncoder passwordEncoder) {
 //        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
 //
 //        for (long i = 1; i <= da.getCustomerListSize();i++) {
