@@ -12,6 +12,8 @@ public class User {
     @NonNull
     private String email;
     @NonNull
+    private String firstName;
+    @NonNull
     private String encryptedPassword;
     @NonNull
     private Boolean enabled;

@@ -8,16 +8,10 @@ CREATE TABLE book (
     imageUrl VARCHAR(1000)
 );
 
-CREATE TABLE customer (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL
-);
-
 CREATE TABLE sec_user (
                           userId            BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
                           email             VARCHAR(75) NOT NULL UNIQUE,
+                          firstName         VARCHAR(75) NOT NULL,
                           encryptedPassword VARCHAR(128) NOT NULL,
                           enabled           BIT NOT NULL
 );
@@ -45,7 +39,7 @@ ALTER TABLE user_role
     ADD CONSTRAINT user_role_fk2 FOREIGN KEY (roleId)
         REFERENCES sec_role (roleId);
 
-CREATE TABLE starWars (
+CREATE TABLE gameOfThrones (
                       id BIGINT AUTO_INCREMENT PRIMARY KEY,
                       isbn VARCHAR(255) NOT NULL,
                       title VARCHAR(255) NOT NULL,

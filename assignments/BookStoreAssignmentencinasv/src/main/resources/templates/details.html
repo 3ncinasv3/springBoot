@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding-top: 20px;
+            background-color: #f8f4e3;
+            color: #333;
+        }
+
+        /* Header Styling */
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        nav li {
+            float: left;
+            display: block;
+            text-align: center;
+            padding: 14px 20px; /* Reduced padding */
+            text-decoration: none;
+            font-size: 18px;
+            color: #FBC13B;
+            transition: background-color 0.3s;
+        }
+
+        nav li:hover {
+            background-color: #555;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #FBC13B;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        nav a:hover {
+            color: #FBC13B;
+        }
+
+        /* Container for Book Details Styling */
+        .container {
+            width: 100%;
+            background-color: #f8f4e3;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* Book Details Styling */
+        div[th\:object="${book}"] {
+            margin: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #FBC13B;
+            color: black;
+        }
+
+        /* Additional Styling */
+        p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        img {
+            max-width: 250px;
+            max-height: 250px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div th:object="${book}">
+    <p>Title: <span th:text="${book.title}"></span></p>
+    <p>Author: <span th:text="${book.author}"></span></p>
+    <p>Price: <span th:text="${book.price}"></span></p>
+    <p>ISBN #: <span th:text="${book.ISBN}"></span></p>
+    <p>Description: <span th:text="${book.description}"></span></p>
+<!--    <p>Cover: <span th:text="${book.imageUrl}"></span></p>-->
+    <img th:src="@{${book.imageUrl}}" alt="Book Image" style="max-width: 250px; max-height: 250px;" />
+</div>
+
+</body>
+</html>

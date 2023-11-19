@@ -1,7 +1,6 @@
 package ca.sheridancollege.BookStoreAssignmentencinasv.database;
 
 import ca.sheridancollege.BookStoreAssignmentencinasv.beans.Book;
-//import ca.sheridancollege.BookStoreAssignmentencinasv.beans.Customer;
 import ca.sheridancollege.BookStoreAssignmentencinasv.beans.User;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -11,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -49,7 +49,8 @@ public class DatabaseAccess {
             book.setTitle(rs.getString("title"));
             book.setAuthor(rs.getString("author"));
             book.setPrice(rs.getBigDecimal("price"));
-            // Set other properties...
+            book.setDescription(rs.getString("description"));
+            book.setImageUrl(rs.getString("imageUrl"));
 
             return book;
         });
@@ -70,19 +71,7 @@ public class DatabaseAccess {
 //        return count.size();
 //    }
 
-    public String getCustomerEmailByID(Long id) {
-        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-        namedParameters.addValue("id", id);
-        String query = "SELECT email FROM customer WHERE id = :id";
-        return jdbc.queryForObject(query, namedParameters, String.class);
-    }
 
-    public String getCustomerPassByID(Long id) {
-        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-        namedParameters.addValue("id", id);
-        String query = "SELECT password FROM customer WHERE id = :id";
-        return jdbc.queryForObject(query, namedParameters, String.class);
-    }
 
 //    public void registerCustomer(Customer customer) {
 //        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
@@ -107,6 +96,18 @@ public class DatabaseAccess {
         }
     }
 
+//    public User findUserFirstName(String email){
+//        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+//        String query = "SELECT * FROM sec_user WHERE email = :email";
+//        namedParameters.addValue("email", email);
+//        try {
+//            return jdbc.queryForObject(query, namedParameters, new BeanPropertyRowMapper<>(User.class));
+//        } catch (EmptyResultDataAccessException erdae) {
+//            return null;
+//        }
+//    }
+
+
     public List<String> getRolesById(Long userId) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         String query ="SELECT sec_role.roleName "
@@ -117,14 +118,15 @@ public class DatabaseAccess {
         return jdbc.queryForList(query, namedParameters, String.class);
     }
 
-    public void addUser(String email, String password) {
+    public void addUser(String email, String password, String firstName) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         String query = "INSERT INTO sec_user "
-                + "(email, encryptedPassword, enabled) "
-                + "VALUES (:email, :encryptedPassword, 1)";
+                + "(email, firstName, encryptedPassword, enabled) "
+                + "VALUES (:email, :firstName, :encryptedPassword, 1)";
         namedParameters.addValue("email", email);
         namedParameters.addValue("encryptedPassword",
                 passwordEncoder.encode(password));
+        namedParameters.addValue("firstName", firstName);
         jdbc.update(query, namedParameters);
     }
 
@@ -139,5 +141,51 @@ public class DatabaseAccess {
     }
 
 
+    // Game Of Thrones Books
+    public List<Book> getGameOfThrones() {
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        String query = "SELECT * FROM gameOfThrones";
+        return jdbc.query(query, namedParameters, new BeanPropertyRowMapper<Book>(Book.class));
+    }
+    public Book getGameOfThronesByISBN(Long isbn) {
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        namedParameters.addValue("isbn", isbn);
+        String query = "SELECT * FROM gameOfThrones WHERE isbn = :isbn";
+
+        return jdbc.queryForObject(query, namedParameters, (rs, rowNum) -> {
+            Book book = new Book();
+            book.setISBN(rs.getString("isbn"));
+            book.setTitle(rs.getString("title"));
+            book.setAuthor(rs.getString("author"));
+            book.setPrice(rs.getBigDecimal("price"));
+            book.setDescription(rs.getString("description"));
+            book.setImageUrl(rs.getString("imageUrl"));
+
+            return book;
+        });
+
+    }
+    public boolean checkIsGameOfThrones(Long isbn) {
+        return isbn.toString().startsWith(String.valueOf(9));
+
+    }
+
+    public List<Book> getAllBooks() {
+
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        // Query for Harry Potter Books
+        String bookQuery = "SELECT * FROM book";
+        List<Book> hpBooks = jdbc.query(bookQuery, namedParameters, new BeanPropertyRowMapper<Book>(Book.class));
+
+        // Query for Game of Thrones Books
+        String gameOfThronesQuery = "SELECT * FROM gameOfThrones";
+        List<Book> gotBooks = jdbc.query(gameOfThronesQuery, namedParameters, new BeanPropertyRowMapper<Book>(Book.class));
+
+        List<Book> allBooks = new ArrayList<>();
+        allBooks.addAll(hpBooks);
+        allBooks.addAll(gotBooks);
+
+      return allBooks;
+    }
 
 }
