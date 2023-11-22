@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class Order {
+public class Cart {
     private String email;
     private List<BookOrderItem> bookOrderItem;
 }

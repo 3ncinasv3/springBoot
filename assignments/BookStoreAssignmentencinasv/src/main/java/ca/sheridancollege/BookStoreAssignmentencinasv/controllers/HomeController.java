@@ -1,6 +1,7 @@
 package ca.sheridancollege.BookStoreAssignmentencinasv.controllers;
 
 import ca.sheridancollege.BookStoreAssignmentencinasv.beans.Book;
+import ca.sheridancollege.BookStoreAssignmentencinasv.beans.Cart;
 import ca.sheridancollege.BookStoreAssignmentencinasv.database.DatabaseAccess;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.Authentication;
@@ -85,11 +86,12 @@ public class HomeController {
 
         return "secure/cart";
     }
+
     @GetMapping("/secure/remove/{isbn}")
     public String remove(@PathVariable Long isbn, HttpSession session) {
-        Book specificBook;
         Object cartAttribute = session.getAttribute("cart");
 
+        Book specificBook;
         if (da.checkIsGameOfThrones(isbn)) {
             specificBook = da.getGameOfThronesByISBN(isbn);
         } else {
@@ -106,6 +108,7 @@ public class HomeController {
             userBooks = new ArrayList<>();
             // Handle the case when the attribute is not present or not a List<Book>
             session.setAttribute("cart", userBooks);
+//            session.setAttribute("cart", new List<Book>());
         }
 
 //        if (userBooks == null) {
@@ -120,7 +123,11 @@ public class HomeController {
 
 
     @GetMapping("/secure/cart")
-    public String cart() {
+    public String cart(HttpSession session) {
+        List<Book> cartBooks  = (List<Book>) session.getAttribute("cart");
+//        session.setAttribute("userCart", session.getAttribute("cart"));
+
+
         return "secure/cart";
     }
 
