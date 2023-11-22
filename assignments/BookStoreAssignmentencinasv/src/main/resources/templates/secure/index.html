@@ -213,8 +213,9 @@
         <li>Harry Potter</li>
         <li>Star Wars</li>
         <li>Chronicles of Narnia</li>
-        <li>Logout</li>
+
         <li><a th:href="@{/secure/cart}">Check Cart</a></li>
+        <li><a th:href="@{/logout}">Logout</a></li>
     </ul>
     </nav>
 </header>
@@ -224,9 +225,9 @@
     <tr>
         <th>ISBN</th>
         <th>Book Name</th>
-        <th>Serial Name</th>
-        <th>Author Name</th>
-        <th>Category</th>
+        <th>Author</th>
+        <th>PRICE $CAD</th>
+        <th></th>
         <th>Action</th>
     </tr>
     <tr th:each="a : ${books}">
@@ -234,8 +235,8 @@
         <td th:text="${a.title}"></td>
         <td th:text="${a.author}"></td>
         <td th:text="${a.price}"></td>
-        <td th:text="${a.description}"></td>
-        <td><img th:src="@{${a.imageUrl}}" alt="Book Image" style="max-width: 175px; max-height: 150px;" />
+<!--        <td th:text="${a.description}"></td>-->
+        <td><a th:href="@{/details/} + ${a.ISBN}"><img th:src="@{${a.imageUrl}}" alt="Book Image" style="max-width: 175px; max-height: 150px;" /></a>
         </td>
         <td><a th:href="@{'/secure/addToCart/'} + ${a.ISBN}">Add To Cart</a></td>
 <!--        <td>
@@ -257,7 +258,7 @@
             <td th:text="${book.title}"></td>
             <td th:text="${book.author}"></td>
             <td th:text="${book.price}"></td>
-            <td th:text="${book.description}"></td>
+<!--            <td th:text="${book.description}"></td>-->
         </tr>
     </table>
 
@@ -281,6 +282,9 @@
     User's Name: <span sec:authentication="name"></span><br>
     Roles: <span sec:authentication="principal.authorities"></span><br><br>
 </div>
+</div>
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+    <a th:href="@{/admin/index}">Admin</a>
 </div>
 
 </body>

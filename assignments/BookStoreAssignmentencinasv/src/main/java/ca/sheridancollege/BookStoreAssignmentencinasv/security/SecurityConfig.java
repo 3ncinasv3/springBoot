@@ -4,9 +4,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-//import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -30,7 +30,8 @@ public class SecurityConfig {
     throws Exception {
         MvcRequestMatcher.Builder mvc = new MvcRequestMatcher.Builder(intro);
         return http.authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(mvc.pattern("/secure/**")).hasRole("USER")
+                        .requestMatchers(mvc.pattern("/secure/**")).hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(mvc.pattern("/admin/**")).hasRole("ADMIN")
                         .requestMatchers(mvc.pattern("/")).permitAll()
                         .requestMatchers(mvc.pattern("/gameOfThrones")).permitAll()
                         .requestMatchers(mvc.pattern("/details/**")).permitAll()
@@ -44,18 +45,16 @@ public class SecurityConfig {
                         .requestMatchers(mvc.pattern("/**")).denyAll()
                 )
                 .csrf(csrf -> csrf.ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).disable())
-//                         .headers(headers -> headers.frameOptions(FrameOptionsConfig::disable))
-                .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
-//                .headers(headers -> headers.frameOptions().disable())
+                .sessionManagement(httpSecuritySessionManagementConfigurer ->
+                        httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
-//                        .formLogin(form -> form.loginPage("/login").permitAll())
                         .formLogin(form -> form.loginPage("/login").permitAll())
-//                        .formLogin(form -> form.loginPage("/").permitAll())
+//                        .oauth2Login(Customizer.withDefaults())
                         .exceptionHandling(exception -> exception.accessDeniedPage("/permission-denied"))
-                        .logout(LogoutConfigurer::permitAll)
+//                        .logout(LogoutConfigurer::permitAll)
+                        .logout(form -> form.logoutSuccessUrl("/"))
+//                        .logout()
                         .build();
-
-
                     }
 }
 

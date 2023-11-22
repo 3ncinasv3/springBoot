@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Secure Home Page</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding-top: 20px;
+            background-color: #f8f4e3;
+            color: #333;
+        }
+
+        body, h1, h2, h3, p, table {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header Styling */
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        nav li {
+            float: left;
+            display: block;
+            text-align: center;
+            padding: 14px 20px; /* Reduced padding */
+            text-decoration: none;
+            font-size: 18px;
+            color: #FBC13B;
+            transition: background-color 0.3s;
+        }
+
+        nav li:hover {
+            background-color: #555;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #FBC13B;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        nav a:hover {
+            color: #FBC13B;
+        }
+
+        /* Container Styling */
+        .container {
+            width: 100%;
+            background-color: #f8f4e3;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 15px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Modal Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            margin-left: auto;
+            margin-top: auto;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: rgba(16, 15, 15, 0.8);
+            margin: auto;
+            width: auto;
+            max-width: fit-content;
+            padding: 30px;
+            border: 1px solid #888;
+            border-radius: 10px;
+            color: white;
+        }
+
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #fff;
+        }
+
+        /* Form Styling */
+        .form-container {
+            width: 70%;
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #FBC13B;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="number"] {
+            width: 100%;
+            max-width: 300px;
+            height: 50px;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 15px;
+            box-sizing: border-box;
+            border-radius: 8px;
+            font-size: 18px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            max-width: 300px;
+            height: 50px;
+            margin-top: 30px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 20px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        /* Miscellaneous Styling */
+        .label {
+            color: black;
+        }
+
+        .button-container {
+            margin-left: 500px;
+        }
+
+        .button {
+            background-color: #FBC13B;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            transition-duration: 0.4s;
+            cursor: pointer;
+            color: black;
+            border: 2px solid #000000;
+            border-radius: 8px;
+            padding: 12px 24px; /* Adjusted padding */
+            font-size: 18px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+<header>
+
+    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+         viewBox="0 0 1400 28" style="enable-background:new 0 0 600 28;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;}
+    .st1{font-family:'MyriadPro-Regular';}
+    .st2{font-size:33px;}
+    .st3{fill:#FBC13B;}
+</style>
+        <rect class="st0" width="248" height="24.26"/>
+        <text transform="matrix(1 0 0 1 0 23.4297)"><tspan x="0" y="0" class="st1 st2">JOSHUA  </tspan><tspan x="128.27" y="0" class="st3 st1 st2">&amp;</tspan><tspan x="148.23" y="0" class="st1 st2">   SONS</tspan></text>
+</svg>
+    <nav>
+        <ul>
+            <li>Harry Potter</li>
+            <li>Star Wars</li>
+            <li>Chronicles of Narnia</li>
+            <li><a th:href="@{/logout}">Logout</a></li>
+            <li><a th:href="@{/secure/cart}">Check Cart</a></li>
+        </ul>
+    </nav>
+</header>
+<div class="container">
+    <h1>AMAZON</h1>
+    <table th:if="${books != null AND books != ''}">
+        <tr>
+            <th>ISBN</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th></th>
+            <th>Actions</th>
+        </tr>
+        <tr th:each="a : ${books}">
+            <td th:text="${a.ISBN}"></td>
+            <td th:text="${a.title}"></td>
+            <td th:text="${a.author}"></td>
+            <td th:text="${a.price}"></td>
+            <td th:text="${a.description}"></td>
+            <td><a th:href="@{/details/} + ${a.ISBN}"><img th:src="@{${a.imageUrl}}" alt="Book Image" style="max-width: 175px; max-height: 150px;" /></a>
+            </td>
+            <td><a th:href="@{'/admin/editBook/'} + ${a.ISBN}">Edit Book</a></td>
+        </tr>
+    </table>
+</div>
+<div class="form-container">
+    <form method="post" th:action="@{/admin/insertBook}" th:object="${book}">
+        ISBN: <input type="text" th:field="*{ISBN}" /><br>
+        Title: <input type="text" th:field="*{title}" /><br>
+        Author: <input type="text" th:field="*{author}" /><br>
+        Price: <input type="number" th:field="*{price}" /><br>
+        Description: <input type="text" th:field="*{description}" /><br>
+        ImageURL: <input type="text" th:field="*{imageUrl}" /><br>
+        <input type="submit" value="Submit" />
+    </form>
+</div>
+
+</body>
+</html>

@@ -33,11 +33,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 grantList.add(new SimpleGrantedAuthority(role));
             }
         }
-        UserDetails userDetails = new
+        return new
                 org.springframework.security.core.userdetails.User(
                 user.getEmail(), user.getEncryptedPassword(),
                 grantList);
-        return userDetails;
     }
 
 }

@@ -49,3 +49,12 @@ CREATE TABLE gameOfThrones (
                       imageUrl VARCHAR(1000)
 );
 
+CREATE TABLE user_cart (
+                           id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                           userId VARCHAR(255) NOT NULL,
+                           isbn VARCHAR(255) NOT NULL
+
+);
+
+
+

@@ -12,38 +12,31 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("unchecked")
 @Controller
 public class HomeController {
-
     private final DatabaseAccess da;
 
     public HomeController(DatabaseAccess da) {
         this.da = da;
     }
 
-
     @GetMapping("/")
     public String index(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userId = authentication.getName();
-//        session.getAttribute(session.getId());
-//        session.setAttribute("sessionId", session.getId());
-//        String userId = authentication.getName();
-//        System.out.println(userId);
         // Calculate pagination information
 //        int pageSize = 5; // Adjust as needed
 //        int totalBooks = da.getBooksSize(); // Replace with your method to get total books
 //        int totalPages = (int) Math.ceil((double) totalBooks / pageSize);
+
         model.addAttribute("books", da.getBooks());
+
 //        model.addAttribute("customers", da.getCustomers());
 //        model.addAttribute("totalPages", totalPages);
 //        model.addAttribute("currentPage", page);
 //        model.addAttribute("pageSize", pageSize);
-//        session.setAttribute
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String userId = authentication.getName();
-//        session.getAttribute("book_" + userId);
-//        model.addAttribute("user")
+
          model.addAttribute("userFirstName", da.findUserAccount(userId));
         return "index";
     }
@@ -53,67 +46,14 @@ public class HomeController {
         return "login";
     }
 
-    @GetMapping("/registration")
-    public String registration(Model model) {
-//        model.addAttribute("customer", new Customer());
-        return "registration";
-    }
 
     @GetMapping("/secure/index")
     public String secure(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userId = authentication.getName();
-        System.out.println(userId);
-//        session.getAttribute()
-//        if (session.isNew()) {
-//            session.setAttribute("userId", userId);
-//            session.setAttribute("book_" + userId);
-//        } else {
-//            userBooks = (List<Book>) session.getAttribute("book_" + userId);
-
-//            if (userBooks == null) {
-//                userBooks = new ArrayList<>();
-//                session.setAttribute("book_" + userId, userBooks);
-//            }
-//            session.setAttribute("book_" + userId, userBooks);
-//        }
-//        model.addAttribute("books", da.getBooks());
-//        model.addAttribute("customers", da.getCustomers());
-//        session.getAttribute("cart");
         model.addAttribute("books", da.getAllBooks());
-//        session.getAttribute("books_" + userId);
-//        session.getAttribute("book_" + userId);
-//        session.setAttribute("sessionId", session.getId());
-//        session.setAttribute("sessionPrice", session.getAttribute("book_"))
-
 
         return "secure/index";
     }
-//@GetMapping("/secure/index")
-//public String secure(Model model, HttpSession session) {
-//    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//    String userId = authentication.getName();
-//
-//    List<Book> userBooks = (List<Book>) session.getAttribute("book_" + userId);
-//
-//    if (userBooks == null) {
-//        userBooks = new ArrayList<>();
-//        session.setAttribute("book_" + userId, userBooks);
-//    }
-//    session.setAttribute("book_" + userId, userBooks);
-//    model.addAttribute("books", da.getBooks());
-//    model.addAttribute("customers", da.getCustomers());
-//    model.addAttribute("userBooks", userBooks);
-//
-//    return "/secure/index";
-//}
-//    @PostMapping("/registration")
-//    public String registerCustomer(Model model, @ModelAttribute Customer customer) {
-//        da.registerCustomer(customer);
-//        model.addAttribute("customer", new Customer());
-//        model.addAttribute("books", da.getBooks());
-//        return "index";
-//    }
+
     @GetMapping("/register")
     public String getRegister() { return "register"; }
 
@@ -125,9 +65,8 @@ public class HomeController {
         return "redirect:/";
     }
 
-
     @GetMapping ("/secure/addToCart/{isbn}")
-    public String addToCart(HttpSession session, @PathVariable Long isbn, Model model) {
+    public String addToCart(HttpSession session, @PathVariable Long isbn) {
         Book specificBook;
 
         if (da.checkIsGameOfThrones(isbn)) {
@@ -135,6 +74,7 @@ public class HomeController {
         } else {
             specificBook = da.getBookByISBN(isbn);
         }
+
         List<Book> userBooks = (List<Book>) session.getAttribute("cart");
         if (userBooks == null) {
             userBooks = new ArrayList<>();
@@ -146,21 +86,34 @@ public class HomeController {
         return "secure/cart";
     }
     @GetMapping("/secure/remove/{isbn}")
-    public String remove(@PathVariable Long isbn, Model model, HttpSession session) {
+    public String remove(@PathVariable Long isbn, HttpSession session) {
         Book specificBook;
+        Object cartAttribute = session.getAttribute("cart");
 
         if (da.checkIsGameOfThrones(isbn)) {
             specificBook = da.getGameOfThronesByISBN(isbn);
         } else {
             specificBook = da.getBookByISBN(isbn);
         }
-        List<Book> userBooks = (List<Book>) session.getAttribute("cart");
-        if (userBooks == null) {
+
+        List<Book> userBooks;
+        if (cartAttribute instanceof List<?> && !((List<?>) cartAttribute).isEmpty()) {
+            userBooks = (List<Book>) cartAttribute;
+            userBooks.remove(specificBook);
+            session.setAttribute("cart", userBooks);
+            // Now you can use the userBooks list safely
+        } else {
             userBooks = new ArrayList<>();
+            // Handle the case when the attribute is not present or not a List<Book>
             session.setAttribute("cart", userBooks);
         }
-        userBooks.remove(specificBook);
-        session.setAttribute("cart", userBooks);
+
+//        if (userBooks == null) {
+//            userBooks = new ArrayList<>();
+//            session.setAttribute("cart", userBooks);
+//        }
+//        userBooks.remove(specificBook);
+//        session.setAttribute("cart", userBooks);
 
         return "secure/cart";
     }
@@ -184,12 +137,32 @@ public class HomeController {
         return "details";
     }
 
+//    @GetMapping("/secure/pay")
+//    public String pay() {
+//        return "secure/pay";
+//    }
+
     @GetMapping("/secure/pay")
-    public String pay() {
+    public String pay(HttpSession session) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+        System.out.println(userId);
+
+        List<Book> userCart = (List<Book>) session.getAttribute("cart");
+
+        if (userCart != null && !userCart.isEmpty()) {
+            // Add user cart to the database
+            da.addCartToDatabase(userId, userCart);
+
+            // Clear the user's cart in the session after adding to the database
+            userCart.clear();
+            session.setAttribute("cart", userCart);
+        }
+
         return "secure/pay";
     }
 
-// Game Of Thrones Logic
+    // Game Of Thrones Logic
     @GetMapping("/gameOfThrones")
     public String gameOfThrones(Model model) {
         model.addAttribute("books", da.getGameOfThrones());
@@ -197,6 +170,45 @@ public class HomeController {
         return "gameOfThrones";
     }
 
+    // Admin Pages
+    @GetMapping("/admin/index")
+    public String admin(Model model) {
+        model.addAttribute("books", da.getAllBooks());
+        model.addAttribute("book", new Book());
+        return "/admin/index";
+    }
+    @GetMapping("/admin/editBook/{isbn}")
+    public String editBook(Model model, @PathVariable Long isbn) {
+        if (da.checkIsGameOfThrones(isbn)) {
+            if (da.getGameOfThronesByISBN(isbn) != null) {
+                model.addAttribute("book", da.getGameOfThronesByISBN(isbn));
+            }
+        } else model.addAttribute("book", da.getBookByISBN(isbn));
+        model.addAttribute("books", da.getAllBooks());
+
+        return "/admin/index";
+    }
+
+
+    @PostMapping("/admin/insertBook")
+    public String insertBook(Model model, @ModelAttribute Book book) {
+        List<Book> existingBooks = da.getAllMatchingISBN(Long.valueOf(book.getISBN()));
+        if (existingBooks.isEmpty()) {
+//            if (da.checkIsGameOfThrones(Long.valueOf(book.getISBN()))) {
+                da.insertBook(book);
+            } else { da.updateBook(book);
+
+            }
+
+        model.addAttribute("book", new Book());
+        model.addAttribute("books", da.getAllBooks());
+        return "/admin/index";
+    }
+
+    @GetMapping("/permission-denied")
+    public String permissionDenied() {
+        return "/error/permission-denied";
+    }
 
 
 }

@@ -289,6 +289,9 @@
                 <li sec:authorize="isAuthenticated()">
                     <a th:href="@{/logout}"><button class="button">Logout</button></a>
                 </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/secure/index}"><button class="button">Shopping</button></a>
+                </li>
 
             </ul>
         </nav>
@@ -328,7 +331,8 @@
         <form method="post" action="#" th:action="@{/logout}">
             <input type="submit" value="Logout" />
         </form>
-        <p><a th:href="@{/secure/index}">To secure index</a></p>
+<!--        <p><a th:href="@{/secure/index}">To secure index</a></p>-->
+        <button class="button" onclick="location.href='/secure/index';">Shopping</button>
 
     </div>
 </div>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charsest="ISO-8859-1">
+<title>Tobeytheghost BOOkstore - Registration Form </title>
+
+<script src="../static/js/script.js" th:src="@{/js/script.js}"></script>
+
+</head>
+<body>
+
+<h1> Register Here!</h1>
+
+<div id="error" class="error"></div>
+<form name="form" action="#" th:action="@{/register}" method="post" onsubmit="return verify()">
+User Name: <input type ="text" name="userName" > </br>
+Email: <input type="email" name="email" /><br>
+Password: <input type="password" name="password" /><br>
+Verify Password: <input type="password" name="verifyPassword" /><br>
+<input type="submit" value="Register">
+</form>
+ 
+</body>
+</html>

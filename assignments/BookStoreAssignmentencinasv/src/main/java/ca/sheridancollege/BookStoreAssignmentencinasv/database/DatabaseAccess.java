@@ -29,14 +29,9 @@ public class DatabaseAccess {
     public List<Book> getBooks() {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         String query = "SELECT * FROM book";
-        return jdbc.query(query, namedParameters, new BeanPropertyRowMapper<Book>(Book.class));
+        return jdbc.query(query, namedParameters, new BeanPropertyRowMapper<>(Book.class));
     }
 
-    public int getBooksSize() {
-        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-        String query = "SELECT * FROM book";
-        return jdbc.query(query, namedParameters, new BeanPropertyRowMapper<Book>(Book.class)).size();
-    }
 
     public Book getBookByISBN(Long isbn) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
@@ -57,33 +52,6 @@ public class DatabaseAccess {
 
     }
 
-
-//    public List<Customer> getCustomers() {
-//        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-//        String query = "SELECT * FROM customer";
-//        return jdbc.query(query, namedParameters, new BeanPropertyRowMapper<Customer>(Customer.class));
-//    }
-
-//    public int getCustomerListSize() {
-//        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-//        String query = "SELECT * FROM customer";
-//        List<Customer> count = jdbc.query(query, namedParameters, new BeanPropertyRowMapper<Customer>(Customer.class));
-//        return count.size();
-//    }
-
-
-
-//    public void registerCustomer(Customer customer) {
-//        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-//        namedParameters.addValue("username", customer.getUsername());
-//        namedParameters.addValue("email", customer.getEmail());
-//        namedParameters.addValue("password", customer.getPassword());
-//        String query = "INSERT INTO customer(username, email, password) VALUES (:username, :email, :password)";
-//        jdbc.update(query, namedParameters);
-//
-//    }
-
-
     // New stuff
     public User findUserAccount(String email){
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
@@ -95,18 +63,6 @@ public class DatabaseAccess {
             return null;
         }
     }
-
-//    public User findUserFirstName(String email){
-//        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-//        String query = "SELECT * FROM sec_user WHERE email = :email";
-//        namedParameters.addValue("email", email);
-//        try {
-//            return jdbc.queryForObject(query, namedParameters, new BeanPropertyRowMapper<>(User.class));
-//        } catch (EmptyResultDataAccessException erdae) {
-//            return null;
-//        }
-//    }
-
 
     public List<String> getRolesById(Long userId) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
@@ -140,12 +96,11 @@ public class DatabaseAccess {
 
     }
 
-
     // Game Of Thrones Books
     public List<Book> getGameOfThrones() {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         String query = "SELECT * FROM gameOfThrones";
-        return jdbc.query(query, namedParameters, new BeanPropertyRowMapper<Book>(Book.class));
+        return jdbc.query(query, namedParameters, new BeanPropertyRowMapper<>(Book.class));
     }
     public Book getGameOfThronesByISBN(Long isbn) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
@@ -167,25 +122,110 @@ public class DatabaseAccess {
     }
     public boolean checkIsGameOfThrones(Long isbn) {
         return isbn.toString().startsWith(String.valueOf(9));
-
     }
+
+    public void insertBook(Book book) {
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        namedParameters.addValue("isbn", book.getISBN());
+        namedParameters.addValue("title", book.getTitle());
+        namedParameters.addValue("author", book.getAuthor());
+        namedParameters.addValue("price", book.getPrice());
+        namedParameters.addValue("description", book.getDescription());
+        namedParameters.addValue("imageUrl", book.getImageUrl());
+        String query;
+        if (book.getISBN().startsWith(String.valueOf(9))) {
+            query = "INSERT INTO gameOfThrones(isbn, title, author, price, description, imageUrl) VALUES (:isbn, :title, :author, :price, :description, :imageUrl)";
+        } else {
+            query = "INSERT INTO book(isbn, title, author, price, description, imageUrl) VALUES (:isbn, :title, :author, :price,:description, :imageUrl)";
+        }
+        try {
+            jdbc.update(query, namedParameters);
+            System.out.println("Book inserted successfully!");
+        } catch (Exception e) {
+            System.out.println("Error inserting book: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+     public void updateBook(Book book) {
+         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+         namedParameters.addValue("isbn", book.getISBN());
+         namedParameters.addValue("title", book.getTitle());
+         namedParameters.addValue("author", book.getAuthor());
+         namedParameters.addValue("price", book.getPrice());
+         namedParameters.addValue("description", book.getDescription());
+         namedParameters.addValue("imageUrl", book.getImageUrl());
+         if (checkIsGameOfThrones(Long.valueOf(book.getISBN()))) {
+             String query = "UPDATE gameOfThrones SET isbn = :isbn, " +
+                     "title = :title, " +
+                     "author = :author, " +
+                     "price = :price, " +
+                     "description = :description, " +
+                     "imageUrl = :imageUrl " +
+                     "WHERE isbn = :isbn";
+             jdbc.update(query, namedParameters);
+         } else {
+             String query = "UPDATE book SET isbn = :isbn, " +
+                     "title = :title, " +
+                     "author = :author, " +
+                     "price = :price, " +
+                     "description = :description, " +
+                     "imageUrl = :imageUrl " +
+                     "WHERE isbn = :isbn";
+             jdbc.update(query, namedParameters);
+
+         }
+     }
+         public void addCartToDatabase(String userId, List<Book> cart) {
+             // Iterate through the cart and insert each item into the database
+             for (Book book : cart) {
+                 MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+                 namedParameters.addValue("userId", userId);
+                 namedParameters.addValue("isbn", book.getISBN());
+
+                 // Add additional parameters as needed for your database schema
+
+                 String query = "INSERT INTO user_cart (userId, isbn) VALUES (:userId, :isbn)";
+                 jdbc.update(query, namedParameters);
+             }
+         }
 
     public List<Book> getAllBooks() {
 
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         // Query for Harry Potter Books
         String bookQuery = "SELECT * FROM book";
-        List<Book> hpBooks = jdbc.query(bookQuery, namedParameters, new BeanPropertyRowMapper<Book>(Book.class));
+        List<Book> hpBooks = jdbc.query(bookQuery, namedParameters, new BeanPropertyRowMapper<>(Book.class));
 
         // Query for Game of Thrones Books
         String gameOfThronesQuery = "SELECT * FROM gameOfThrones";
-        List<Book> gotBooks = jdbc.query(gameOfThronesQuery, namedParameters, new BeanPropertyRowMapper<Book>(Book.class));
+        List<Book> gotBooks = jdbc.query(gameOfThronesQuery, namedParameters, new BeanPropertyRowMapper<>(Book.class));
 
         List<Book> allBooks = new ArrayList<>();
         allBooks.addAll(hpBooks);
         allBooks.addAll(gotBooks);
 
       return allBooks;
+    }
+
+    public List<Book> getAllMatchingISBN(Long isbn) {
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        namedParameters.addValue("isbn", isbn);
+
+        // Harry Potter book database query
+        String bookQuery = "SELECT * FROM book WHERE isbn = :isbn";
+        List<Book> matchingBooksInBookTable = jdbc.query(bookQuery, namedParameters, new BeanPropertyRowMapper<>(Book.class));
+
+        // Game of Thrones book query
+        String gameOfThronesQuery = "SELECT * FROM gameOfThrones WHERE isbn = :isbn";
+        List<Book> matchingBooksInGameOfThronesTable = jdbc.query(gameOfThronesQuery, namedParameters, new BeanPropertyRowMapper<>(Book.class));
+
+        // New List with all matching books
+        List<Book> allMatchingISBN = new ArrayList<>();
+        allMatchingISBN.addAll(matchingBooksInBookTable);
+        allMatchingISBN.addAll(matchingBooksInGameOfThronesTable);
+
+        return allMatchingISBN;
+
     }
 
 }

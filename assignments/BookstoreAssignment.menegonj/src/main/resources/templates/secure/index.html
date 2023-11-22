@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Online Bookstore</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+	<style>
+		/* Add some basic styling for the navigation bar */
+		nav {
+			background-color: #f2f2f2;
+			overflow: hidden;
+		}
+
+		nav a {
+			float: left;
+			display: block;
+			color: black;
+			text-align: center;
+			padding: 14px 16px;
+			text-decoration: none;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- Navigation Bar -->
+	<nav>
+		<a href="#">Register</a>
+		<a href="#">Login</a>
+		<a href="/books">Add Books to List</a>
+		<a href="/cart">View Shopping Cart</a>
+	</nav>
+
+	<h1>Welcome to the Online Bookstore</h1>
+	<!-- Available Books Table -->
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Actions</th>
+        </tr>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.price}"></td>
+            <td>
+                <form th:action="@{/addToCart/{isbn}(isbn=${book.isbn})}" method="post">
+                    <input type="number" name="quantity" min="1" value="1" />
+                    <input type="submit" value="Add to Cart" />
+                </form>
+            </td>
+            <td>
+                <a th:href="@{'/books/' + ${book.isbn}}">View Details</a>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

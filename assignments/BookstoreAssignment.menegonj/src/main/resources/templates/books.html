@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Browse Books</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+	<style>
+		/* Add some basic styling for the navigation bar */
+		nav {
+			background-color: #f2f2f2;
+			overflow: hidden;
+		}
+
+		nav a {
+			float: left;
+			display: block;
+			color: black;
+			text-align: center;
+			padding: 14px 16px;
+			text-decoration: none;
+		}
+	</style>
+</head>
+
+<body>
+	<nav>
+		<a href="/">Home</a>
+		<a href="/cart">Shopping Cart</a>
+	</nav>
+
+	<table>
+		<tr>
+			<th>ISBN</th>
+			<th>Title</th>
+			<th>Actions</th>
+		</tr>
+		<tr th:each="book : ${books}">
+			<td th:text="${book.isbn}">ISBN</td>
+			<td th:text="${book.title}">Title</td>
+			<td>
+				<a th:href="@{'/books/' + ${book.isbn}}">View Details</a>
+				<a th:href="@{'/editBook/' + ${book.isbn}}" class="th-btn-edit">Edit</a>
+				<a th:href="@{'/deleteBook/' + ${book.isbn}}" class="th-btn-delete">Delete</a>
+			</td>
+		</tr>
+	</table>
+	<h2>Add a New Book</h2>
+	<form th:action="@{/insertBook}" th:object="${newBook}" method="post">
+		<label for="isbn">ISBN:</label>
+		<input type="text" th:field="*{isbn}" id="isbn" />
+
+		<label for="title">Title:</label>
+		<input type="text" th:field="*{title}" id="title" />
+
+		<label for="author">Author:</label>
+		<input type="text" th:field="*{author}" id="author" />
+
+		<label for="price">Price:</label>
+		<input type="number" th:field="*{price}" id="price" />
+
+		<label for="description">Description:</label>
+		<textarea th:field="*{description}" id="description"></textarea>
+
+		<button type="submit">Add Book</button>
+	</form>
+</body>
+
+</html>
