@@ -1,0 +1,101 @@
+<html xmlns:th="http://www.thymeleaf.org">
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <!-- <link rel="stylesheet" href="../styles/main.css"> -->
+      <script
+        src="../../../static/js/script.js"
+        th:src="@{/js/script.js}"
+      ></script>
+
+      <link
+        rel="stylesheet"
+        type="text/css"
+        media="all"
+        href="../../../static/css/main.css"
+        th:href="@{/css/main.css}"
+      />
+
+      <title>Book details</title>
+    </head>
+
+    <body>
+      <header>
+        <div class="logo">
+          <img src="/images/logo.svg" alt="logo" />
+          <div class="logo_title">
+            <p class="main">Bookholics</p>
+            <p class="secondary">Book store</p>
+          </div>
+        </div>
+
+        <h1 th:text="'Logged in as: ' + ${#authentication.name}"></h1>
+        <div class="enter_group">
+          <a href="/secure/cart">
+            <img src=" /images/card.svg" alt="login_ico" />
+            <p>Cart</p>
+          </a>
+          <a href="/logout">
+            <img class="sign" src="/images/logout.svg" alt="log_out" />
+            <p>Logout</p>
+          </a>
+        </div>
+      </header>
+      <section>
+        <h1 th:text="${book.bookName}">Book Details</h1>
+        <table class="bookdetails .centered-table">
+          <tr>
+            <td><strong>ISBN:</strong></td>
+            <td><span th:text="${book.isbn}">ISBN</span></td>
+          </tr>
+          <tr>
+            <td><strong>Book Name:</strong></td>
+            <td><span th:text="${book.bookName}">Book Name</span></td>
+          </tr>
+          <tr>
+            <td><strong>Serial Name:</strong></td>
+            <td><span th:text="${book.serialName}">Serial Name</span></td>
+          </tr>
+          <tr>
+            <td><strong>Author Name:</strong></td>
+            <td><span th:text="${book.authorName}">Author Name</span></td>
+          </tr>
+          <tr>
+            <td><strong>Category:</strong></td>
+            <td><span th:text="${book.category}">Category</span></td>
+          </tr>
+        </table>
+        <div class="button">
+          <a href="/secure/book">GO BACK!</a>
+        </div>
+      </section>
+      <footer>
+        <div class="logo">
+          <img src="/images/logo.svg" alt="logo" />
+          <div class="logo_title">
+            <p class="main">Bookholics</p>
+            <p class="secondary">Book store</p>
+          </div>
+        </div>
+        <div class="rihts-reserved">
+          <p>Bookholics. 2023© All rights rederved</p>
+        </div>
+        <div class="contacts">
+          <a tel:++14169016600> tel +1 416-901-6600</a>
+          <div class="socislmedia">
+            <a href="#">
+              <img src="/images/facebook.svg" alt="facebook" />
+            </a>
+            <a href="#">
+              <img src="/images/instagram.svg" alt="instagram" />
+            </a>
+            <a href="#">
+              <img src="/images/tik tok.svg" alt="tik tok" />
+            </a>
+          </div>
+        </div>
+      </footer>
+    </body>
+  </html>
+</html>

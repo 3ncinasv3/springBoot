@@ -1,0 +1,106 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<!-- <link rel="stylesheet" href="styles/main.css"> -->
+	<script src="../static/js/script.js" th:src="@{/js/script.js}"></script>
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/main.css" th:href="@{/css/main.css}" />
+	<title>Home</title>
+
+</head>
+
+<body>
+	<header>
+		<div class="logo">
+			<img src="images/logo.svg" alt="logo">
+			<div class="logo_title">
+				<p class="main">Bookholics</p>
+				<p class="secondary">Book store</p>
+			</div>
+		</div>
+		<div class="enter_group">
+			<a href="/secure/book">
+				<img src="images/login.svg" alt="login_ico">
+				<p>Login</p>
+			</a>
+			<a href="/register">
+				<img class="sign" src="images/sign_up.svg" alt="signup_ico">
+				<p>Sign UP</p>
+			</a>
+		</div>
+	</header>
+	<nav>
+		<ul>
+			<li><a href="#">Paper books</a></li>
+			<li><a href="#">E-books</a></li>
+			<li><a href="#">About Us</a></li>
+			<li><a href="#">Contacts</a></li>
+		</ul>
+	</nav>
+	<main>
+		<div class="main-content">
+			<div class="tittle">
+				<h1>
+					Bookholics #1 Bookstore
+				</h1>
+				<h2>
+					Unveiling Literary Treasures: Explore the World of Words at Bookholics Bookstore
+				</h2>
+			</div>
+			<a href="#">View books</a>
+		</div>
+		<div>
+			<img src="images/hero_img.png" alt="img hero">
+		</div>
+	</main>
+
+	<!-- <h1 th:text="'You just logged in: ' + ${#authentication.name}"></h1> -->
+	<!-- <h1 th:if="${#authentication.isAuthenticated()}" th:text="'You just logged in: ' + ${#authentication.name}"></h1> -->
+	<!-- 
+
+      <div sec:authorize="isAuthenticated()">
+        User's Name: <span sec:authentication="name"></span><br />
+        Roles: <span sec:authentication="principal.authorities"></span
+        ><br /><br />
+        <div>
+          <form method="get" action="#" th:action="@{/logout}">
+            <input type="submit" value="Logout" />
+          </form>
+        </div>
+      </div>  -->
+
+
+	<!-- <p>Already a member?<a href="/secure/book" class="button-link">Click here</a><br/></p> -->
+	
+
+	<!-- <a href="/login" class="button-link">Login Page</a> -->
+	<footer>
+		<div class="logo">
+			<img src="images/logo.svg" alt="logo">
+			<div class="logo_title">
+				<p class="main">Bookholics</p>
+				<p class="secondary">Book store</p>
+			</div>
+		</div>
+		<div class="rihts-reserved">
+			<p>Bookholics. 2023© All rights rederved</p>
+		</div>
+		<div class="contacts">
+			<a tel:++14169016600> tel +1 416-901-6600</a>
+			<div class="socislmedia">
+				<a href="#">
+					<img src="images/facebook.svg" alt="facebook">
+				</a>
+				<a href="#">
+					<img src="images/instagram.svg" alt="instagram">
+				</a>
+				<a href="#">
+					<img src="images/tik tok.svg" alt="tik tok">
+				</a>
+			</div>
+		</div>
+	</footer>
+</body>
+
+</html>

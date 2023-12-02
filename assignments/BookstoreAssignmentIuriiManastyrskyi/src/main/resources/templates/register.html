@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<script src="../static/js/script.js" th:src="@{/js/script.js}"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<script src="../static/js/script.js" th:src="@{/js/script.js}"></script>
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/main.css" th:href="@{/css/main.css}" />
+	<title>Register Here!</title>
+
+<body>
+	<header>
+		<div class="logo">
+			<img src="images/logo.svg" alt="logo">
+			<div class="logo_title">
+				<p class="main">Bookholics</p>
+				<p class="secondary">Book store</p>
+			</div>
+		</div>
+		<div class="enter_group">
+			<a href="/">
+				<img  src=" images/home.svg" alt="home">
+				<p>Home</p>
+			</a>
+			<a href="/secure/book">
+				<img  src="images/login.svg" alt="login_ico">
+				<p>Login</p>
+			</a>
+		</div>
+	</header>
+
+
+	
+	<section>
+		<h1>Register Here!</h1>
+		<!-- <div id="error" class="error"></div> -->
+
+		<div id="error" class="error"></div>
+		<div id="success" class="success"></div>
+		<form name="form" action="#" th:action="@{/register}" method="post" onsubmit="return verify()">
+			Email: <input type="email" name="username" /><br />
+			Password: <input type="password" name="password" /><br />
+			Verify Password: <input type="password" name="verifyPassword" /><br />
+
+			<input type="submit" value="Register" />
+		</form>
+	</section>
+
+
+
+	<footer>
+		<div class="logo">
+			<img src="images/logo.svg" alt="logo">
+			<div class="logo_title">
+				<p class="main">Bookholics</p>
+				<p class="secondary">Book store</p>
+			</div>
+		</div>
+		<div class="rihts-reserved">
+			<p>Bookholics. 2023© All rights rederved</p>
+		</div>
+		<div class="contacts">
+			<a tel:++14169016600> tel +1 416-901-6600</a>
+			<div class="socislmedia">
+				<a href="#">
+					<img src="images/facebook.svg" alt="facebook">
+				</a>
+				<a href="#">
+					<img src="images/instagram.svg" alt="instagram">
+				</a>
+				<a href="#">
+					<img src="images/tik tok.svg" alt="tik tok">
+				</a>
+			</div>
+		</div>
+	</footer>
+
+
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+
+
+	<script>
+       document.addEventListener('DOMContentLoaded', function () {
+    // Listen for form submission
+    var form = document.forms.namedItem('form');
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        // Get form data
+        var formData = new FormData(form);
+
+        // Make an AJAX request to the server
+        fetch('/register', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Registration was successful
+                Swal.fire({
+                    title: 'Registration Successful!',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then((result) => {
+                    window.location.href = '/';
+                });
+            } else {
+                // Registration failed, display an error message
+                var errorMessage = document.getElementById('error');
+                errorMessage.innerText = data.message || 'Registration failed.';
+            }
+        })
+        .catch(error => {
+            console.error('Error during registration:', error);
+            // Display a generic error message
+            var errorMessage = document.getElementById('error');
+            errorMessage.innerText = 'An unexpected error occurred during registration.';
+        });
+    });
+
+    console.log('Script is running');
+    console.log('DOM content loaded');
+});
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" media="all" href="../../../static/css/main.css" th:href="@{/css/main.css}" />
+	<title>Order Confirmation</title>
+</head>
+
+<body>
+	<header>
+		<div class="logo">
+			<img src="../images/logo.svg" alt="logo">
+			<div class="logo_title">
+				<p class="main">Bookholics</p>
+				<p class="secondary">Book store</p>
+			</div>
+		</div>
+		<div class="enter_group">
+			<a th:href="@{/secure/cart}">
+			<!-- <a href="../secure/cart"> -->
+				<img src=" ../images/card.svg" alt="login_ico">
+				<p>Cart</p>
+			</a>
+			
+
+			<a th:href="@{/}">
+				<img class="sign" src="../images/logout.svg" alt="log_out">
+				<p>Logout</p>
+			</a>
+		</div>
+	</header>
+	<section>
+		<div>
+			<h1>Order Confirmation</h1>
+
+			<!-- Display success message -->
+			<div th:if="${successMessage}">
+				<p th:text="${successMessage}" style="color: green;"></p>
+			</div>
+
+			<!-- Display error message -->
+			<div th:if="${errorMessage}">
+				<p th:text="${errorMessage}" style="color: red;"></p>
+			</div>
+
+			<!-- You can customize this section based on your needs -->
+			<div>
+				<div class="confirmation">
+					<h2>Your order has been successfully placed. Thank you for shopping with us!</h2>
+					<!-- <p>Order details:</p> -->
+				</div>
+				<!-- Add more details as needed based on your Order model -->
+				<ul th:each="order : ${orders}">
+					<li th:text="${order.bookId} + ' - Quantity: ' + ${order.quantity}"></li>
+				</ul>
+
+				<!-- Add a link or button to navigate to the home page or other pages -->
+				<div class="button">
+					<a th:href="@{/secure/book}">Continue Shopping</a>
+				</div>
+
+			</div>
+		</div>
+	</section>
+	<footer>
+		<div class="logo">
+			<img src="../images/logo.svg" alt="logo">
+			<div class="logo_title">
+				<p class="main">Bookholics</p>
+				<p class="secondary">Book store</p>
+			</div>
+		</div>
+		<div class="rihts-reserved">
+			<p>Bookholics. 2023© All rights rederved</p>
+		</div>
+		<div class="contacts">
+			<a tel:++14169016600> tel +1 416-901-6600</a>
+			<div class="socislmedia">
+				<a href="#">
+					<img src="../images/facebook.svg" alt="facebook">
+				</a>
+				<a href="#">
+					<img src="../images/instagram.svg" alt="instagram">
+				</a>
+				<a href="#">
+					<img src="../images/tik tok.svg" alt="tik tok">
+				</a>
+			</div>
+		</div>
+	</footer>
+
+</body>
+
+</html>

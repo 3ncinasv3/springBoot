@@ -1,0 +1,378 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+/* main style*/
+*{
+	margin: 0;
+	padding: 0;
+}
+body {
+   font-family: 'Kanit', sans-serif;
+   background-color: #f2f2f2;
+}
+/*header style*/
+header {
+	display: flex;
+	flex-flow: row;
+	justify-content: space-between;
+	padding: 15px 50px;
+	background-color: #0074d9 ;
+}
+
+header .logo, footer .logo {
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	color:#f2f2f2;
+}
+
+header .logo img, footer .logo img {
+	margin-right: 10px;
+}
+
+header .logo .main, footer .logo .main{
+	font-size: 25px;
+	font-weight: 600;
+}
+
+header .logo .secondary, footer .logo .secondary{
+	font-size: 16px;
+	font-weight: 200;
+	margin-top: -10px;
+}
+
+header .enter_group {
+	display: flex;
+	flex-flow: row nowrap;
+}
+
+header .enter_group a{
+	margin: 0 10px;
+	color:#f2f2f2;
+	font-size: 16px;
+}
+
+header .enter_group a:hover{
+	color: #ccc;
+}
+
+header .enter_group a .login img{
+	width: 28px;
+	height: 36px;
+}
+
+/* navigation style*/
+nav{
+	background-color: #f2f2f2;
+	padding: 15px 50px;
+}
+
+nav ul{
+	display: flex;
+	flex-flow: row nowrap;
+	list-style: none;
+}
+
+nav ul a{
+	font-size: 14px;
+	padding: 10px 30px;
+	color: #0074d9;
+}
+
+nav ul a:first-child{
+	padding-left: 0;
+}
+
+main{
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-around;
+	align-items: center;
+	padding: 50px;
+	min-height: 65vh;
+}
+
+main h1, section h1{
+	font-size: 72px;
+	font-weight: 600;
+	margin-bottom: 40px;
+	text-transform: uppercase;
+	line-height: 80px;
+	color: #0074d9;
+}
+
+main h2{
+	font-size: 36px;
+	font-weight: 300;
+	line-height: 55px;
+	letter-spacing: 2px;
+	color: #1c1c1c;
+	margin-bottom: 50px;
+}
+
+main .main-content a{
+	padding: 20px 35px;
+	font-size: 20px;
+	font-weight: 300;
+	color: #f2f2f2;
+	background-color: #0074d9;
+	text-decoration: none;
+	text-transform: uppercase;
+	border-radius: 12px;
+}
+
+main img{
+	width: 100%;
+	height: auto;
+}
+
+section{
+	min-height: 80vh;
+	background-image: url('../images/login_img.jpg');
+	background-size: cover;
+}
+section h1{
+	padding: 50px;
+	text-align: center;
+}
+
+.container {
+   max-width: 600px;
+   margin: 0 auto;
+   padding: 20px;
+   background-color: #fff;
+   border-radius: 5px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.button-link {
+   display: inline-block;
+   padding: 10px 20px;
+   background-color: #0074d9;
+   /* Change this to your desired background color */
+   color: #fff;
+   /* Text color */
+   text-decoration: none;
+   /* Remove underline */
+   border: 1px solid #0056b3;
+   /* Add a border */
+   border-radius: 5px;
+   /* Add rounded corners */
+}
+
+form {
+	width: 20%;
+	margin: 0 auto;
+	background-color: white;
+	padding: 50px;
+	border-radius: 12px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	text-align: center;
+}
+
+
+input[type="submit"] {
+   background-color: #0074d9;
+   color: #fff;
+   border: none;
+   padding: 10px 20px;
+   border-radius: 8px;
+   cursor: pointer;
+}
+
+.error {
+	color: #ff0000;
+	margin-bottom: 10px;
+}
+
+input[type="email"], input[type="password"] {
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #12e9e9;
+	box-sizing: border-box;
+	border-radius: 8px;
+}
+
+input[type="submit"] {
+	font-size: 16px;
+	background-color: #4CAF50;
+	color: white;
+	padding: 14px 20px;
+	margin: 8px 0;
+	border: none;
+	cursor: pointer;
+	width: 100%;
+	border-radius: 8px;
+}
+
+input[type="submit"]:hover {
+	opacity: 0.8;
+}
+
+a {
+	color: #007BFF;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+table {
+	width: 90%;
+	margin: 20px auto;
+	border-collapse: collapse;
+ }
+
+ .centered-table {
+    width: 30%; /* Set left and right margin to 'auto' to center horizontally */
+}
+
+ th,
+ td {
+	border: 1px solid #ddd;
+	padding: 10px auto;
+	text-align: center;
+ }
+
+ tr:nth-child(even) {
+	background-color: #f2f2f2;
+ }
+
+ th {
+	background-color: #3498db;
+	color: #fff;
+}
+
+.hidden-form{
+	width: auto;
+	background: none;
+}
+
+
+ h2 {
+	margin-top: 20px;
+	padding: 10px;
+ }
+
+ input[type="text"],
+ input[type="date"],
+ input[type="time"] {
+	width: 100%;
+	padding: 10px;
+	margin: 5px 0;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+ }
+
+ input[type="submit"] {
+	background-color: #3498db;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 3px;
+	cursor: pointer;
+ }
+
+ .button {
+	display: block;
+	width: 70px;
+	color: #f2f2f2;
+	background-color: #4CAF50;
+	border: none;
+	margin: 0 auto;
+	padding: 10px 20px;
+	border-radius: 3px;
+	cursor: pointer;
+	text-decoration: none; /* Remove underlines from links */
+ }
+
+ .button a{
+	color: #fff;
+	text-align: center;
+	text-decoration: none;
+ }
+
+ .delete-button {
+	background-color: red; /* Set the background color to red */
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 3px;
+	cursor: pointer;
+	text-decoration: none; /* Remove underlines from links */
+	display: inline-block;
+	text-align: center;
+ }
+
+ .add-to-cart {
+	background-color: green;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 3px;
+	cursor: pointer;
+	text-decoration: none; /* Remove underlines from links */
+	display: inline-block;
+	text-align: center;
+ }
+
+ .add-to-cart-button {
+	/* Add your desired styles for the visible button */
+	background-color: #3498db;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 3px;
+	cursor: pointer;
+	text-decoration: none;
+	display: inline-block;
+	text-align: center;
+ }
+
+ .add-to-cart-button {
+	/* Add your desired styles for the visible button */
+	background-color: #3498db;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 3px;
+	cursor: pointer;
+	text-decoration: none;
+	display: inline-block;
+	text-align: center;
+ }
+ .form-group{
+	display: flex;
+	flex-flow: row;
+	justify-content: space-around;
+	margin: 0 auto;
+ }
+.form-group form{
+	margin: 10px 0;
+}
+
+.confirmation{
+	text-align: center;
+}
+/* footer style*/
+footer{
+	display: flex;
+	flex-flow: row;
+	justify-content: space-between;
+	align-items: center;
+	padding: 20px 50px;
+	background-color: #0074d9;
+}
+
+footer .rihts-reserved{
+	font-size: 14px;
+	font-weight: 200;
+	color: #f2f2f2;
+}
+
+footer .contacts a{
+	font-size: 16px;
+	color: #f2f2f2;
+	margin: 10px;
+}
