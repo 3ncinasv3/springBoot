@@ -1,13 +1,13 @@
-package ca.sheridancollege.lec111_restfulService.controllers;
+package ca.sheridancollege.encinasv.controllers;
 
-import ca.sheridancollege.lec111_restfulService.beans.Student;
-import ca.sheridancollege.lec111_restfulService.database.DatabaseAccess;
+import ca.sheridancollege.encinasv.beans.Student;
+import ca.sheridancollege.encinasv.database.DatabaseAccess;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/students")
+@RequestMapping("api/v1/students")
 public class StudentController {
     private final DatabaseAccess da;
 
@@ -19,10 +19,10 @@ public class StudentController {
     public List<Student> getStudentCollection() {
         return da.findAll();
     }
-//    @GetMapping(value = "/{id}")
-//    public Student getIndividualStudent(@PathVariable Long id) {
-//        return da.findById(id);
-//    }
+    @GetMapping(value = "/{id}")
+    public Student getIndividualStudent(@PathVariable Long id) {
+        return da.findById(id);
+    }
 
 //    @GetMapping(value = "/{id}")
 //    public Student getIndividualStudent(@PathVariable Long id) {
@@ -42,3 +42,4 @@ public class StudentController {
         return "Total Records: " + da.count();
     }
 }
+

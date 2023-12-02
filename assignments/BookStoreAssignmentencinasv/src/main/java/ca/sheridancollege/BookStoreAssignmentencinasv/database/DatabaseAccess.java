@@ -17,21 +17,17 @@ import java.util.List;
 @Component
 public class DatabaseAccess {
     protected final NamedParameterJdbcTemplate jdbc;
-
     private final BCryptPasswordEncoder passwordEncoder;
-
     public DatabaseAccess(NamedParameterJdbcTemplate jdbc, BCryptPasswordEncoder passwordEncoder) {
         this.jdbc = jdbc;
         this.passwordEncoder = passwordEncoder;
     }
-
 
     public List<Book> getBooks() {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
         String query = "SELECT * FROM book";
         return jdbc.query(query, namedParameters, new BeanPropertyRowMapper<>(Book.class));
     }
-
 
     public Book getBookByISBN(Long isbn) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
@@ -225,7 +221,5 @@ public class DatabaseAccess {
         allMatchingISBN.addAll(matchingBooksInGameOfThronesTable);
 
         return allMatchingISBN;
-
     }
-
 }

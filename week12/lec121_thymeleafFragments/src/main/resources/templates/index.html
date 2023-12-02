@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header th:insert="~{fragments/header.html :: header}"></header>
+<div th:replace="${admin} ? ~{fragments/menu.html :: div.menu-admin} : ~{fragments/menu.html ::
+div.menu}"></div>
+<table th:if="${studentList != null and !studentList.empty}">
+    <tr><th>Student Name</th></tr>
+    <tr th:each="s : ${studentList}">
+        <td th:text="${s.name}">Frank</td>
+    </tr>
+</table>
+<hr>
+<form method="post" th:action="@{/insertStudent}" th:object="${student}">
+    Name: <input type="text" th:field="*{name}" />
+    <input type="submit" value="Add Student to List!" />
+</form>
+<footer th:replace="~{fragments/footer.html :: footer}"></footer>
+
+</body>
+</html>

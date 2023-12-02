@@ -12,4 +12,6 @@ public class Student {
     private Long id;
     @NonNull
     private String name;
+    @NonNull
+    private String lastName;
 }

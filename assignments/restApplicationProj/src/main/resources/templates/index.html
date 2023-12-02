@@ -1,0 +1,87 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Exchange Rates</title>-->
+<!--    <link href="@{/css/bootstrap.min.css}" rel="stylesheet">-->
+<!--</head>-->
+<!--<body>-->
+<!--<header th:insert="~{fragments/header.html :: header}"></header>-->
+<!--<div th:replace="${admin} ? ~{fragments/menu.html :: div.menu-admin} : ~{fragments/menu.html :: div.menu}"></div>-->
+<!--<h1>Exchange Rates</h1>-->
+
+<!--<form th:action="@{/convert}" method="post" th:object="${conversionForm}">-->
+<!--    <div>-->
+<!--        <label for="baseCurrency">Base Currency:</label>-->
+<!--        <select th:field="*{baseCurrency}" id="baseCurrency" required>-->
+<!--            <option th:each="currency : ${currencies}" th:value="${currency}" th:text="${currency}"></option>-->
+<!--        </select>-->
+<!--    </div>-->
+
+<!--    <div>-->
+<!--        <label for="amount">Amount:</label>-->
+<!--        <input type="number" th:field="*{amount}" id="amount" required>-->
+<!--    </div>-->
+
+<!--    <div>-->
+<!--        <label for="targetCurrency">Target Currency:</label>-->
+<!--        <select th:field="*{targetCurrency}" id="targetCurrency" required>-->
+<!--            <option th:each="currency : ${currencies}" th:value="${currency}" th:text="${currency}"></option>-->
+<!--        </select>-->
+<!--    </div>-->
+
+<!--    <div>-->
+<!--        <button type="submit">Convert</button>-->
+<!--    </div>-->
+<!--</form>-->
+
+<!--<table>-->
+<!--    &lt;!&ndash; Display exchange rates as before &ndash;&gt;-->
+<!--</table>-->
+
+<!--<div th:if="${conversionResult}">-->
+<!--    <p th:text="'Converted amount: ' + ${conversionResult} + ' ' + ${targetCurrency}"></p>-->
+<!--</div>-->
+
+<!--<footer th:replace="~{fragments/footer.html :: footer}"></footer>-->
+<!--</body>-->
+<!--</html>-->
+
+<!--this one works below!!-->
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exchange Rates</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+<header th:insert="~{fragments/header.html :: header}"></header>
+<div th:replace="${admin} ? ~{fragments/menu.html :: div.menu-admin} : ~{fragments/menu.html ::
+div.menu}"></div>
+<h1 class="mt-4 mb-4">Exchange Rates</h1>
+<div class="table-responsive">
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>Currency</th>
+        <th>Exchange Rate</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="entry : ${exchangeRates}">
+        <td th:text="${entry.key}"></td>
+        <td th:text="${entry.value}"></td>
+    </tr>
+    </tbody>
+</table>
+</div>
+<footer th:replace="~{fragments/footer.html :: footer}"></footer>
+
+
+</body>
+</html>
