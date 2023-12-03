@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Conversion Table</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+<header th:insert="~{fragments/header.html :: header}"></header>
+<div th:replace="${admin} ? ~{fragments/menu.html :: div.menu-admin} : ~{fragments/menu.html ::
+div.menu}"></div>
+
+<form th:action="@{/conversion}"  method="get">
+    <label for="sourceCurrency">Source Currency:</label>
+    <input type="text" id="sourceCurrency" name="sourceCurrency" required>
+
+    <label for="targetCurrency">Target Currency:</label>
+    <input type="text" id="targetCurrency" name="targetCurrency" required>
+
+    <button type="submit">Get Ratio</button>
+</form>
+<p th:text="'Source Currency: ' + ${sourceCurrency}"></p>
+<p th:text="'Target Currency: ' + ${targetCurrency}"></p>
+<p th:text="'Conversion Rate: ' + ${conversionRate}"></p>
+
+</body>
+</html>

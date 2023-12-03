@@ -62,7 +62,6 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMapping
         throws Exception {
     MvcRequestMatcher.Builder mvc = new MvcRequestMatcher.Builder(intro);
     return http.authorizeHttpRequests(authorize -> authorize
-
                             .requestMatchers(mvc.pattern("/")).permitAll()
                             .requestMatchers(mvc.pattern("/details/**")).permitAll()
                             .requestMatchers(mvc.pattern("/gameOfThrones")).permitAll()

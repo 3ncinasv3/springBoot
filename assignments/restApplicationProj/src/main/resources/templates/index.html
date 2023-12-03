@@ -58,12 +58,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exchange Rates</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 </head>
 <body>
 <header th:insert="~{fragments/header.html :: header}"></header>
 <div th:replace="${admin} ? ~{fragments/menu.html :: div.menu-admin} : ~{fragments/menu.html ::
 div.menu}"></div>
-<h1 class="mt-4 mb-4">Exchange Rates</h1>
+
+
+<h2 class="mt-4 mb-4">Exchange Rates</h2>
+<p th:text=" 'BaseCurrency in : ' + ${baseCode}"></p>
 <div class="table-responsive">
 <table class="table table-bordered">
     <thead>
@@ -73,13 +78,24 @@ div.menu}"></div>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="entry : ${exchangeRates}">
-        <td th:text="${entry.key}"></td>
-        <td th:text="${entry.value}"></td>
+    <tr th:each="each : ${exchangeRates}">
+        <td th:text="${each.key}"></td>
+        <td th:text="${each.value}"></td>
+
     </tr>
     </tbody>
 </table>
 </div>
+<form th:action="@{/changeBaseCurrency}" method="get">
+    <label for="newBaseCurrency">Enter new base currency:</label>
+    <!-- Use datalist for autocomplete -->
+    <input type="text" id="newBaseCurrency" name="baseCurrency" list="currencyOptions" autocomplete="off" required>
+    <datalist id="currencyOptions">
+        <!-- Add options based on the currencies you want to suggest -->
+        <option th:each="currency : ${currencies}" th:value="${currency}" th:text="${currency}"></option>
+    </datalist>
+    <button type="submit">Change Base Currency</button>
+</form>
 <footer th:replace="~{fragments/footer.html :: footer}"></footer>
 
 

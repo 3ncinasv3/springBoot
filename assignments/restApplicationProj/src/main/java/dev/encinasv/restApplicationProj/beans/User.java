@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 public class User {
     private Long userId;
     private String email;
+    private String firstName;
     private String encryptedPassword;
     private Boolean enabled;
 }

@@ -8,5 +8,6 @@ import java.util.Map;
 @Data
 @NoArgsConstructor
 public class ExchangeRatesResponse {
+    private String base_Code;
     private Map<String, Double> rates;
 }
