@@ -1,15 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Convert</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
+
 </head>
 <body>
 <header th:insert="~{fragments/header.html :: header}"></header>
-<div th:replace="${admin} ? ~{fragments/menu.html :: div.menu-admin} : ~{fragments/menu.html ::
-div.menu}"></div>
+
+<!-- menu logic -->
+
+<div th:if="${#authorization.expression('isAuthenticated()')}">
+
+    <!-- If authenticated, include the admin menu fragment -->
+    <div th:replace="~{fragments/menu.html :: div.user-menu}"></div>
+</div>
+
+<div th:unless="${#authorization.expression('isAuthenticated')}">
+
+    <!-- If not authenticated, include the regular menu fragment -->
+    <div th:replace="~{fragments/menu.html :: div.menu}"></div>
+</div>
+
+<!-- Conversion Calculator form -->
 
 <form th:action="@{/conversionCalc}"  method="get">
     <label for="sourceCurrency">Source Currency:</label>
@@ -23,10 +44,135 @@ div.menu}"></div>
 
     <button type="submit">Convert</button>
 </form>
-<p th:text="'Source Currency: ' + ${sourceCurrency}"></p>
-<p th:text="'Target Currency: ' + ${targetCurrency}"></p>
-<p th:text="'Conversion Rate: ' + ${conversionRate}"></p>
-<p th:text="'Conversion Total: ' + ${conversionTotal}"></p>
+<p th:text="${sourceCurrency != null} ? 'Source = ' + ${sourceCurrency} : ''"></p>
+<p th:text="${targetCurrency != null} ? 'Target = ' + ${targetCurrency} : ''"></p>
+<p th:text="${conversionRate != null} ? 'Rate = ' + ${conversionRate} : ''"></p>
+<p th:text="${conversionTotal != null} ? 'Total = $' + ${conversionTotal} + ${targetCurrency}: ''"></p>
+
+<div sec:authorize="isAuthenticated()">
+<button onclick="addCurrencyForm()">Add Currency Form</button>
+
+<div id="currencyForms"> <!-- This div was missing -->
+    <!-- Existing form for conversion -->
+    <form th:action="@{/conversionCalc}" method="get">
+        <label>Source Currency:
+            <input type="text" name="sourceCurrency" required>
+        </label>
+        <label>Target Currency:
+            <input type="text" name="targetCurrency" required>
+        </label>
+        <label>Total:
+            <input type="text" name="total" required>
+        </label>
+        <button type="submit">Convert</button>
+    </form>
+
+    <!-- Additional forms will be dynamically added here using JavaScript -->
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+<script>
+    var selectedSourceCurrency = "";
+    var selectedTargetCurrency = "";
+
+    function addCurrencyForm() {
+        var formsContainer = document.getElementById('currencyForms');
+
+        var newForm = document.createElement('form');
+        newForm.action = '/conversionCalc';
+        newForm.method = 'get';
+
+        // Add source currency input with pre-filled value
+        var sourceCurrencyLabel = document.createElement('label');
+        sourceCurrencyLabel.textContent = 'Source Currency:';
+        var sourceCurrencyInput = document.createElement('input');
+        sourceCurrencyInput.type = 'text';
+        sourceCurrencyInput.name = 'sourceCurrency';
+        sourceCurrencyInput.value = selectedSourceCurrency; // Pre-fill with selected value
+        sourceCurrencyLabel.appendChild(sourceCurrencyInput);
+
+        // Add target currency input with pre-filled value
+        var targetCurrencyLabel = document.createElement('label');
+        targetCurrencyLabel.textContent = 'Target Currency:';
+        var targetCurrencyInput = document.createElement('input');
+        targetCurrencyInput.type = 'text';
+        targetCurrencyInput.name = 'targetCurrency';
+        targetCurrencyInput.value = selectedTargetCurrency; // Pre-fill with selected value
+        targetCurrencyLabel.appendChild(targetCurrencyInput);
+
+        // Add total input
+        var totalLabel = document.createElement('label');
+        totalLabel.textContent = 'Total:';
+        var totalInput = document.createElement('input');
+        totalInput.type = 'number';
+        totalInput.name = 'total';
+        totalLabel.appendChild(totalInput);
+
+        // Add convert button
+        var convertButton = document.createElement('button');
+        convertButton.type = 'submit';
+        convertButton.textContent = 'Convert';
+
+        newForm.appendChild(sourceCurrencyLabel);
+        newForm.appendChild(targetCurrencyLabel);
+        newForm.appendChild(totalLabel);
+        newForm.appendChild(convertButton);
+
+        formsContainer.appendChild(newForm);
+    }
+
+    // Function to set selected currencies
+    function setSelectedCurrencies() {
+        selectedSourceCurrency = document.getElementById('sourceCurrency').value;
+        selectedTargetCurrency = document.getElementById('targetCurrency').value;
+    }
+
+</script><!--<script>-->
+<!--    function addCurrencyForm() {-->
+<!--        var formsContainer = document.getElementById('currencyForms');-->
+
+<!--        var newForm = document.createElement('form');-->
+<!--        newForm.action = '/conversionCalc';-->
+<!--        newForm.method = 'get';-->
+
+<!--        var sourceCurrencyLabel = document.createElement('label');-->
+<!--        sourceCurrencyLabel.textContent = 'Source Currency:';-->
+<!--        var sourceCurrencyInput = document.createElement('input');-->
+<!--        sourceCurrencyInput.type = 'text';-->
+<!--        sourceCurrencyInput.name = 'sourceCurrency';-->
+<!--        sourceCurrencyInput.required = true;-->
+<!--        sourceCurrencyLabel.appendChild(sourceCurrencyInput);-->
+
+<!--        var targetCurrencyLabel = document.createElement('label');-->
+<!--        targetCurrencyLabel.textContent = 'Target Currency:';-->
+<!--        var targetCurrencyInput = document.createElement('input');-->
+<!--        targetCurrencyInput.type = 'text';-->
+<!--        targetCurrencyInput.name = 'targetCurrency';-->
+<!--        targetCurrencyInput.required = true;-->
+<!--        targetCurrencyLabel.appendChild(targetCurrencyInput);-->
+
+<!--        var totalLabel = document.createElement('label');-->
+<!--        totalLabel.textContent = 'Total:';-->
+<!--        var totalInput = document.createElement('input');-->
+<!--        totalInput.type = 'text';-->
+<!--        totalInput.name = 'total';-->
+<!--        totalInput.required = true;-->
+<!--        totalLabel.appendChild(totalInput);-->
+
+<!--        var convertButton = document.createElement('button');-->
+<!--        convertButton.type = 'submit';-->
+<!--        convertButton.textContent = 'Convert';-->
+
+<!--        newForm.appendChild(sourceCurrencyLabel);-->
+<!--        newForm.appendChild(targetCurrencyLabel);-->
+<!--        newForm.appendChild(totalLabel);-->
+<!--        newForm.appendChild(convertButton);-->
+
+<!--        formsContainer.appendChild(newForm);-->
+<!--    }-->
+<!--</script>-->
 
 
 </body>

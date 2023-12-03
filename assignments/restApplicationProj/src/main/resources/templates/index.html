@@ -52,23 +52,59 @@
 
 
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exchange Rates</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
 
 </head>
 <body>
 <header th:insert="~{fragments/header.html :: header}"></header>
-<div th:replace="${admin} ? ~{fragments/menu.html :: div.menu-admin} : ~{fragments/menu.html ::
-div.menu}"></div>
+<div th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
+
+    <!-- If authenticated, include the admin menu fragment -->
+    <div th:replace="~{fragments/menu.html :: div.user-menu}"></div>
+</div>
+<div th:unless="${#authorization.expression('isAuthenticated')}">
+    <!-- If not authenticated, include the regular menu fragment -->
+    <div th:replace="~{fragments/menu.html :: div.menu}"></div>
+</div>
+<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+    <div th:replace="~{fragments/menu.html :: div.admin-menu}"></div>
+
+    <p>User has the role: ROLE_ADMIN</p>
+</div>
+
+<div sec:authorize="isAuthenticated()">
+    <h1>
+        Welcome,
+        <span th:text="${userName}"></span><br>
+    </h1>
+</div>
+
 
 
 <h2 class="mt-4 mb-4">Exchange Rates</h2>
 <p th:text=" 'BaseCurrency in : ' + ${baseCode}"></p>
+<form th:action="@{/changeBaseCurrency}" method="get">
+    <label for="newBaseCurrency">Enter new base currency:</label>
+    <!-- Use datalist for autocomplete -->
+    <input type="text" id="newBaseCurrency" name="baseCurrency" list="currencyOptions" autocomplete="off" required>
+    <datalist id="currencyOptions">
+        <!-- Add options based on the currencies you want to suggest -->
+        <option th:each="currency : ${currencies}" th:value="${currency}" th:text="${currency}"></option>
+    </datalist>
+    <button type="submit">Change Base Currency</button>
+</form>
 <div class="table-responsive">
 <table class="table table-bordered">
     <thead>
@@ -86,17 +122,9 @@ div.menu}"></div>
     </tbody>
 </table>
 </div>
-<form th:action="@{/changeBaseCurrency}" method="get">
-    <label for="newBaseCurrency">Enter new base currency:</label>
-    <!-- Use datalist for autocomplete -->
-    <input type="text" id="newBaseCurrency" name="baseCurrency" list="currencyOptions" autocomplete="off" required>
-    <datalist id="currencyOptions">
-        <!-- Add options based on the currencies you want to suggest -->
-        <option th:each="currency : ${currencies}" th:value="${currency}" th:text="${currency}"></option>
-    </datalist>
-    <button type="submit">Change Base Currency</button>
-</form>
+
 <footer th:replace="~{fragments/footer.html :: footer}"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
 
 </body>

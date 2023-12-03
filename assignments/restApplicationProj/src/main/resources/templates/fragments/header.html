@@ -1,21 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>modHeader</title>
     <style>
+        body {
+            text-align: center;
+        }
         #system-name {
             font-size: 80pt;
             color: #333; /* Add your desired color */
+
+        }
+        span {
+            text-align: center;
         }
     </style>
 </head>
 <body>
-<div th:fragment="header">
+<div id="header" th:fragment="header">
 <!--    <img id="system-logo" height="95px"-->
 <!--         src="../../static/images/spring-boot-logo.png"-->
 <!--         th:src="@{/images/spring-boot-logo.png}"  alt="empty"/>-->
-    <span id="system-name" style="font-size:70pt;">J&V Currency Calculator</span>
+    <span id="system-name" style="font-size:65pt;">FOREX calc</span>
 </div>
 
 

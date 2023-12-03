@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Ticker</th>
+            <th>Most Recent Timestamp</th>
+            <th>Open</th>
+            <th>High</th>
+            <th>Low</th>
+            <th>Close</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="stock : ${stocks}">
+<!--            <td th:text="${stock.ticker}"></td>-->
+<!--            <td th:text="${stock.mostRecentTimestamp}"></td>-->
+            <td th:text="${stock.open}"></td>
+            <td th:text="${stock.high}"></td>
+            <td th:text="${stock.low}"></td>
+            <td th:text="${stock.close}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+</body>
+</html>

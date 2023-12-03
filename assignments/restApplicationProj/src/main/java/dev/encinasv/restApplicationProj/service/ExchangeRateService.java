@@ -30,6 +30,7 @@ public class ExchangeRateService {
 
         return result;
     }
+
     public Map<String, Object> getAllExchangeRatesByBaseCode(String baseCurrency) {
         String fullUrl = apiUrl + "/latest/" + baseCurrency;
 //                +"/latest?access_key=" + accessKey + "&base=" + baseCurrency;
@@ -44,15 +45,13 @@ public class ExchangeRateService {
         result.put("baseCode", baseCode);
         return result;
     }
-
     public Double convertCurrency(String sourceCurrency, String targetCurrency) {
         RestTemplate restTemplate = new RestTemplate();
         String fullUrl = apiUrl + "/pair/" + sourceCurrency + "/" + targetCurrency;
         Map<String, Object> response = restTemplate.getForObject(fullUrl, Map.class);
         assert response != null;
-        Double conversionRate = (Double) response.get("conversion_rate");
-        System.out.println(conversionRate);
-        return conversionRate;
+
+        return (Double) response.get("conversion_rate");
     }
         public Double convertCurrencyTotal(String sourceCurrency, String targetCurrency, Double total) {
         RestTemplate restTemplate = new RestTemplate();
@@ -60,7 +59,6 @@ public class ExchangeRateService {
         Map<String, Object> response = restTemplate.getForObject(fullUrl, Map.class);
         assert response != null;
         Double conversionRate = (Double) response.get("conversion_rate");
-        System.out.println(conversionRate);
         return conversionRate * total;
     }
 }

@@ -29,3 +29,17 @@ ALTER TABLE user_role
 ALTER TABLE user_role
     ADD CONSTRAINT user_role_fk2 FOREIGN KEY (roleId)
         REFERENCES sec_role (roleId);
+
+-- User Data
+CREATE TABLE users (
+    userId            BIGINT NOT NULL,
+    firstName         VARCHAR(75),
+    lastName          VARCHAR(75),
+    address           VARCHAR(75)
+);
+ALTER TABLE users
+    ADD CONSTRAINT usersRole_uk UNIQUE (userId);
+
+ALTER TABLE users
+    ADD CONSTRAINT usersRole_fk FOREIGN KEY (userId)
+    REFERENCES sec_user (userId);
