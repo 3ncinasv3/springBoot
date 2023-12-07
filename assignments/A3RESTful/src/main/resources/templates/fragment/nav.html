@@ -1,0 +1,25 @@
+<nav>
+	<div th:fragment="nav">
+		<ul>
+			<!--			<li><a th:href="@{/}">Home</a></li>-->
+			<li><a th:href="@{/register}">Register</a></li>
+			<li><a th:href="@{/login}">Login</a></li>
+			<li><a th:href="@{/cart}">Shopping Cart</a></li>
+			<li>
+				<a th:href="@{/logout}">
+					Logout
+				</a>
+			</li>
+			<!-- Check if user is authenticated -->
+			<li th:if="${#authorization.expression('isAuthenticated()')}">
+				<!-- Check if the user is an ADMIN -->
+				<span th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+					th:text="'Logged in as Admin'"></span>
+				<!-- Check if the user is a USER -->
+				<span th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}"
+					th:text="'Logged in as User'"></span>
+			</li>
+			<!-- You can add more navigation items here if needed -->
+		</ul>
+	</div>
+</nav>

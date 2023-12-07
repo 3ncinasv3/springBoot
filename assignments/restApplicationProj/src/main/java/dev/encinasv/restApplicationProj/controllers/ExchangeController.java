@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/api-v1/")
+@RequestMapping("/secure/user/account")
 @RestController
 @RequiredArgsConstructor
 public class ExchangeController {
@@ -15,7 +15,7 @@ public class ExchangeController {
 
     @GetMapping("/get")
     public ResponseEntity<?> callEndPointForData() {
-return ResponseEntity.ok(exchangeRateService.getAllExchangeRates());
+        return ResponseEntity.ok(exchangeRateService.getAllExchangeRates());
     }
 
 //

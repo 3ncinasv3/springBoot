@@ -39,8 +39,6 @@ public class SecurityConfig {
 
                                  .anyRequest().authenticated()
 
-//                                 .requestMatchers(mvc.pattern("/**")).permitAll()
-//                         .requestMatchers(mvc.pattern("/api-v1/**")).permitAll()
                  )
                  .csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console")).disable())
                  .headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Graphics Card Details</title>
+	<link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+	<header th:insert="~{fragment/header :: header}"></header>
+	<div th:insert="~{fragment/nav :: nav}"></div>
+
+	<div th:if="${graphicsCard}">
+		<h2 th:text="${graphicsCard.model}"></h2> <!-- Display storage model -->
+		<p>Manufacturer: <span th:text="${graphicsCard.manufacturer}"></span></p>
+		<p>Description: <span th:text="${graphicsCard.description}"></span></p>
+		<p>Price: <span th:text="${graphicsCard.price}"></span></p>
+		<p>Type: <span th:text="${graphicsCard.vramGB}"></span></p>
+		<!-- Add other details specific to storage -->
+	</div>
+
+	<a href="/secure/user/cart"	th:href="@{/secure/user/cart/gpu/} + ${graphicsCard.id}">Add To Cart</a>
+
+<!--	<a href="/secure/user/cart">Add To Cart</a>-->
+	<a href="/secure/user/index">Home</a>
+	<footer th:replace="~{fragment/footer :: footer}"></footer>
+</body>
+
+</html>

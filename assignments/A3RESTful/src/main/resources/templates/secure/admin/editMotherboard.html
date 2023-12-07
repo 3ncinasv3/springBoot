@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Motherboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Add your CSS and other meta tags -->
+</head>
+<body>
+    <h1>Edit Motherboard</h1>
+    
+    <form th:action="@{/secure/admin/updateMotherboard}" th:object="${motherboard}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        <label>Model:</label>
+        <input type="text" th:field="*{model}" /><br>
+
+        <label>Manufacturer:</label>
+        <input type="text" th:field="*{manufacturer}" /><br>
+
+        <label>Price:</label>
+        <input type="number" th:field="*{price}" step="0.01" /><br>
+
+        <label>Socket Type:</label>
+        <input type="text" th:field="*{socketType}" /><br>
+
+        <!-- Add other fields for editing Motherboard -->
+        <!-- ... -->
+
+        <button type="submit">Update Motherboard</button>
+    </form>
+
+    <a href="/secure/admin/motherboard">Back to Motherboard List</a>
+</body>
+</html>

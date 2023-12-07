@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Graphics Card</title>
+	<link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+	<header th:insert="~{fragment/header :: header}"></header>
+	<div th:insert="~{fragment/nav :: nav}"></div>
+
+	<h1>Graphics Card Page</h1>
+
+	<ul>
+		<li th:each="gpu : ${graphicsCards}">
+			<a th:href="'/secure/user/graphicscard/' + ${gpu.id}" th:text="${gpu.model}"></a>
+		</li>
+	</ul>
+
+	<a href="/secure/user/index">Home</a>
+	<footer th:replace="~{fragment/footer :: footer}"></footer>
+</body>
+
+</html>

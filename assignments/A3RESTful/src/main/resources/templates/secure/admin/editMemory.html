@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Memory</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Add your CSS and other meta tags -->
+</head>
+<body>
+    <h1>Edit Memory</h1>
+    
+    <form th:action="@{/secure/admin/updateMemory}" th:object="${memory}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        <label>Model:</label>
+        <input type="text" th:field="*{model}" /><br>
+
+        <label>Manufacturer:</label>
+        <input type="text" th:field="*{manufacturer}" /><br>
+
+        <label>Price:</label>
+        <input type="number" th:field="*{price}" step="0.01" /><br>
+
+        <label>Description:</label>
+        <textarea th:field="*{description}"></textarea><br>
+
+        <label>Size (GB):</label>
+        <input type="number" th:field="*{sizeGB}" /><br>
+
+        <label>Type:</label>
+        <input type="text" th:field="*{type}" /><br>
+
+        <button type="submit">Update Memory</button>
+    </form>
+
+    <a href="/secure/admin/memory">Back to Memory List</a>
+</body>
+</html>

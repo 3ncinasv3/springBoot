@@ -43,3 +43,15 @@ ALTER TABLE users
 ALTER TABLE users
     ADD CONSTRAINT usersRole_fk FOREIGN KEY (userId)
     REFERENCES sec_user (userId);
+
+CREATE TABLE userBaseCode (
+    userId  BIGINT NOT NULL,
+    source  VARCHAR(75),
+    target  VARCHAR(75)
+);
+ALTER TABLE userBaseCode
+    ADD CONSTRAINT usersBaseCode_uk UNIQUE (userId);
+
+ALTER TABLE userBaseCode
+    ADD CONSTRAINT usersBaseCode FOREIGN KEY (userId)
+    REFERENCES sec_user (userId);

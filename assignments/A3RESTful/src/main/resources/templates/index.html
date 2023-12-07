@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<!-- Include your header fragment -->
+	<title>Home</title>
+	<link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+	<header th:insert="~{fragment/header :: header}"></header>
+	<div th:insert="~{fragment/nav :: nav}"></div>
+
+	<!-- Navigation links -->
+	<ul>
+		<li><a href="/error/permission-denied">CPU</a></li>
+		<li><a href="/error/permission-denied">Graphics Card</a></li>
+		<li><a href="/error/permission-denied">Memory</a></li>
+		<li><a href="/error/permission-denied">Motherboard</a></li>
+		<li><a href="/error/permission-denied">Storage</a></li>
+		<!-- Add more links for other components -->
+	</ul>
+
+	<footer th:replace="~{fragment/footer :: footer}"></footer>
+</body>
+
+</html>

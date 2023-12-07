@@ -1,7 +1,10 @@
 package dev.encinasv.restApplicationProj.controllers;
 
+import dev.encinasv.restApplicationProj.beans.StockDataResponse;
 import dev.encinasv.restApplicationProj.database.DatabaseAccess;
 import dev.encinasv.restApplicationProj.service.ExchangeRateService;
+import dev.encinasv.restApplicationProj.service.StockService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -13,16 +16,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 @Controller
 public class HomeController {
     private final ExchangeRateService exchangeRateService;
     private final DatabaseAccess da;
-    public HomeController(ExchangeRateService exchangeRateService, DatabaseAccess da) {
+    private final StockService stockService;
+    private final StockRestController stockRestController;
+    public HomeController(ExchangeRateService exchangeRateService, DatabaseAccess da, StockService stockService, StockRestController stockRestController) {
         this.exchangeRateService = exchangeRateService;
         this.da = da;
+        this.stockService = stockService;
+        this.stockRestController = stockRestController;
     }
     // Landing page logic
     @GetMapping("/")
@@ -35,10 +44,10 @@ public class HomeController {
         Object principal = authentication.getPrincipal();
         String role = (String) authentication.getCredentials();
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        System.out.println(principal);
+//        System.out.println(principal);
 //        System.out.println(role);
 //        System.out.println(authorities);
-        System.out.println(userName);
+//        System.out.println(userName);
         if (authentication.getPrincipal() instanceof OAuth2User oAuth2User) {
             String name = oAuth2User.getAttribute("name");
 
@@ -120,6 +129,19 @@ public class HomeController {
         Long userId = da.findUserAccount(username).getUserId();
         da.addRole(userId, 1L);
         return "redirect:/";
+    }
+    @GetMapping("/stocksAjax")
+    public String stocksAjax(HttpSession session) {
+        List<String> selectedTickers = stockRestController.getSelectedTickersFromSession(session);
+        List<StockDataResponse> stockDataList = new ArrayList<>();
+
+        for (String ticker : selectedTickers) {
+            StockDataResponse stockData = stockService.getStockData(ticker);
+            if (stockData != null) {
+                stockDataList.add(stockData);
+            }
+        }
+        return "stocksAjax";
     }
 
 }

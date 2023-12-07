@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Storage</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Add your CSS and other meta tags -->
+</head>
+<body>
+    <h1>Edit Storage</h1>
+    
+    <form th:action="@{/secure/admin/updateStorage}" th:object="${storage}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        <label>Model:</label>
+        <input type="text" th:field="*{model}" /><br>
+        
+        <label>Manufacturer:</label>
+        <input type="text" th:field="*{manufacturer}" /><br>
+        
+        <label>Price:</label>
+        <input type="number" th:field="*{price}" step="0.01" /><br>
+        
+        <label>Description:</label>
+        <textarea th:field="*{description}"></textarea><br>
+        
+        <label>Capacity (GB):</label>
+        <input type="number" th:field="*{capacityGB}" /><br>
+        
+        <label>Type:</label>
+        <input type="text" th:field="*{type}" /><br>
+
+        <button type="submit">Update Storage</button>
+    </form>
+
+    <a href="/secure/admin/storage">Back to Storage List</a>
+</body>
+</html>

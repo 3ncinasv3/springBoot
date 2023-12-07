@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Storage</title>
+	<link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+	<header th:insert="~{fragment/header :: header}"></header>
+	<div th:insert="~{fragment/nav :: nav}"></div>
+
+	<h1>Storage Page</h1>
+
+	<!-- Display list of Storage -->
+	<ul>
+		<li th:each="storage : ${storage}">
+			<a th:href="@{'/secure/user/storage/' + ${storage.id}}"> <!-- Link to storage details page -->
+				<span th:text="${storage.model}"></span> <!-- Display storage model -->
+				<!-- Add other details like manufacturer, price, capacityGB, type -->
+			</a>
+		</li>
+	</ul>
+
+
+	<a href="/secure/user/index">Home</a>
+	<footer th:replace="~{fragment/footer :: footer}"></footer>
+</body>
+
+</html>

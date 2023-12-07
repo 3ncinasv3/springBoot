@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Memory List</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Add your CSS and other meta tags -->
+</head>
+<body>
+    <h1>Memory List</h1>
+    
+    <!-- Display Memory list -->
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Model</th>
+                <th>Manufacturer</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Size (GB)</th>
+                <th>Type</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Use Thymeleaf to iterate through memoryList -->
+            <tr th:each="memory : ${memoryList}">
+                <td th:text="${memory.id}">ID</td>
+                <td th:text="${memory.model}">Model</td>
+                <td th:text="${memory.manufacturer}">Manufacturer</td>
+                <td th:text="${memory.price}">Price</td>
+                <td th:text="${memory.description}">Description</td>
+                <td th:text="${memory.sizeGB}">Size (GB)</td>
+                <td th:text="${memory.type}">Type</td>
+                <td>
+                    <a th:href="@{'/secure/admin/editMemory/' + ${memory.id}}">Edit</a>
+                    <a th:href="@{'/secure/admin/deleteMemory/' + ${memory.id}}"
+                        onclick="return confirm('Are you sure you want to delete this Memory?')">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h2>Add Memory</h2>
+    <form th:action="@{/secure/admin/addMemory}" th:object="${newMemory}" method="post">
+        <label>Model:</label>
+        <input type="text" th:field="*{model}" /><br>
+
+        <label>Manufacturer:</label>
+        <input type="text" th:field="*{manufacturer}" /><br>
+
+        <label>Price:</label>
+        <input type="number" th:field="*{price}" step="0.01" /><br>
+
+        <label>Description:</label>
+        <textarea th:field="*{description}"></textarea><br>
+
+        <label>Size (GB):</label>
+        <input type="number" th:field="*{sizeGB}" /><br>
+
+        <label>Type:</label>
+        <input type="text" th:field="*{type}" /><br>
+
+        <button type="submit">Add Memory</button>
+    </form>
+
+    <a href="/secure/admin/index">Back to Admin Home</a>
+</body>
+</html>

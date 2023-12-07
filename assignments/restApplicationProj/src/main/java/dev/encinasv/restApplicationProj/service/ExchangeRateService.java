@@ -17,7 +17,6 @@ public class ExchangeRateService {
     public Map<String, Object> getAllExchangeRates() {
         String baseCurrency = "CAD";
         String fullUrl = apiUrl + "/latest/" + baseCurrency;
-//                +"/latest?access_key=" + accessKey + "&base=" + baseCurrency;
         RestTemplate restTemplate = new RestTemplate();
         Map<String, Object> response = restTemplate.getForObject(fullUrl, Map.class);
         assert response != null;
@@ -33,7 +32,6 @@ public class ExchangeRateService {
 
     public Map<String, Object> getAllExchangeRatesByBaseCode(String baseCurrency) {
         String fullUrl = apiUrl + "/latest/" + baseCurrency;
-//                +"/latest?access_key=" + accessKey + "&base=" + baseCurrency;
         RestTemplate restTemplate = new RestTemplate();
         Map<String, Object> response = restTemplate.getForObject(fullUrl, Map.class);
         assert response != null;

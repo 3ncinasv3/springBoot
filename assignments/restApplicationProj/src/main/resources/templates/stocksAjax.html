@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Stocks (AJAX)</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="/css/custom.css" rel="stylesheet">
+</head>
+<style>
+    body {
+        text-align: center;
+        padding-top: 60px;
+    }
+
+    h2 {
+        margin-top: 20px;
+    }
+
+    form {
+        margin-top: 20px;
+    }
+</style>
+<body>
+<header th:insert="~{fragments/header.html :: header}"></header>
+
+<div th:insert="~{fragments/menu.html :: div.user-menu}"></div>
+
+<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+    <div th:replace="~{fragments/menu.html :: div.admin-menu}"></div>
+</div>
+
+<h2 class="mt-4 mb-4">Stocks (AJAX)</h2>
+<div id="stocks-container">
+    <!-- Stock data will be loaded here using AJAX -->
+    <table class="table table-dark table-bordered">
+        <thead>
+        <tr>
+            <th>Symbol</th>
+            <th>Current Price</th>
+        </tr>
+        </thead>
+        <tbody id="stocks-table-body">
+        <!-- Stock data rows will be inserted here using AJAX -->
+        </tbody>
+    </table>
+    <!-- Stock data will be loaded here using AJAX -->
+</div>
+
+<form id="add-ticker-form" method="get" action="#">
+    <label for="new-ticker">Add Ticker:</label>
+    <input type="text" id="new-ticker" name="newTicker" required>
+    <button type="button" onclick="addTicker()">Add</button>
+</form>
+<!--<form th:action="@{/changeBaseCurrency}" method="get">-->
+<!--    <label for="newBaseCurrency">Enter new base currency:</label>-->
+<!--    &lt;!&ndash; Use datalist for autocomplete &ndash;&gt;-->
+<!--    <input type="text" id="newBaseCurrency" name="baseCurrency" list="currencyOptions" autocomplete="off" required>-->
+<!--    <datalist id="currencyOptions">-->
+<!--        &lt;!&ndash; Add options based on the currencies you want to suggest &ndash;&gt;-->
+<!--        <option th:each="currency : ${currencies}" th:value="${currency}" th:text="${currency}"></option>-->
+<!--    </datalist>-->
+<!--    <button type="submit">Change Base Currency</button>-->
+<!--</form>-->
+
+<div class="container">
+    <footer th:replace="~{fragments/footer.html :: footer}"></footer>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+
+
+<script th:inline="javascript">
+
+
+        function loadStocks() {
+            $.get("/api/stocks", function (data) {
+                var stocksContainer = $("#stocks-table-body");
+                stocksContainer.empty();
+
+                $.each(data, function (index, stock) {
+                    // var stockRow = "<p>" + stock.symbol + " - " + stock.currentPrice + "</p>";
+                    var stockRow = "<tr><td>" + stock.symbol + "</td><td>" + stock.currentPrice + "</td></tr>";
+
+                    stocksContainer.append(stockRow);
+                });
+            });
+        }
+
+        function addTicker() {
+            var newTicker = $("#new-ticker").val();
+
+            $.get("/api/stocks/add", {newTicker: newTicker}, function (data) {
+                // After adding the new ticker, reload the stock data
+                loadStocks();
+            });
+        }
+
+        // Initial load of stocks
+        loadStocks();
+
+</script>
+</body>
+</html>

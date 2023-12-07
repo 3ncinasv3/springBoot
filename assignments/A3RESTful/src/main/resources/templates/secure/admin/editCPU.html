@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Edit CPU</title>
+	<link rel="stylesheet" href="/css/style.css">
+	<!-- Add your CSS and other meta tags -->
+</head>
+
+<body>
+	<h1>Edit CPU</h1>
+
+	<form th:action="@{/secure/admin/updateCPU}" th:object="${cpu}" method="post">
+		<input type="hidden" th:field="*{id}" />
+		<label>Model:</label>
+		<input type="text" th:field="*{model}" /><br>
+
+		<label>Manufacturer:</label>
+		<input type="text" th:field="*{manufacturer}" /><br>
+
+		<label>Price:</label>
+		<input type="number" th:field="*{price}" /><br>
+
+		<label>Description:</label>
+		<textarea th:field="*{description}"></textarea><br>
+
+		<label>Speed (GHz):</label>
+		<input type="number" th:field="*{speedGHz}" step="0.01" />
+
+		<button type="submit">Update CPU</button>
+	</form>
+
+	<a href="/secure/admin/cpu">Back to CPU List</a>
+</body>
+
+</html>

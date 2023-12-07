@@ -1,0 +1,143 @@
+body, h1, h2, p, ul, li, form {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f8f8f8;
+}
+
+header {
+    background-color: #3f51b5;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+header h1 {
+    font-size: 36px;
+}
+
+nav {
+    background-color: #f2f2f2;
+    overflow: hidden;
+    padding: 10px 0;
+}
+
+nav a {
+    float: left;
+    display: block;
+    color: #333333;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: background-color 0.3s ease-in-out;
+}
+
+nav a:hover {
+    background-color: #dddddd;
+}
+
+.container {
+    width: 80%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+a {
+    color: #3f51b5;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+a:hover {
+    color: #1a237e;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #dddddd;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+form label {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+form input[type="text"],
+form input[type="number"],
+form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 16px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+}
+
+form button[type="submit"] {
+    background-color: #3f51b5;
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+form button[type="submit"]:hover {
+    background-color: #1a237e;
+}
+
+.th-btn-edit {
+    background-color: #3f51b5;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px 15px;
+    margin-right: 10px;
+    border: 1px solid #1a237e;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.th-btn-edit:hover {
+    background-color: #1a237e;
+}
+
+.th-btn-delete {
+    background-color: #ff0000;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px 15px;
+    border: 1px solid #aa0000;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.th-btn-delete:hover {
+    background-color: #aa0000;
+}

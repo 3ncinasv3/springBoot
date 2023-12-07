@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Graphics Card</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Add your CSS and other meta tags -->
+</head>
+<body>
+    <h1>Edit Graphics Card</h1>
+    
+    <form th:action="@{/secure/admin/updateGraphicsCard}" th:object="${graphicsCard}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        <label>Model:</label>
+        <input type="text" th:field="*{model}" /><br>
+
+        <label>Manufacturer:</label>
+        <input type="text" th:field="*{manufacturer}" /><br>
+
+        <label>Price:</label>
+        <input type="number" th:field="*{price}" step="0.01" /><br>
+
+        <label>Description:</label>
+        <textarea th:field="*{description}"></textarea><br>
+
+        <label>VRAM (GB):</label>
+        <input type="number" th:field="*{vramGB}" /><br>
+
+        <button type="submit">Update Graphics Card</button>
+    </form>
+
+    <a href="/secure/admin/graphicscard">Back to Graphics Card List</a>
+</body>
+</html>

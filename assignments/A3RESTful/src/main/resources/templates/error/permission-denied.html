@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Permission Denied</title>
+	<link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+	<header th:insert="~{fragment/header :: header}"></header>
+	<div th:insert="~{fragment/nav :: nav}"></div>
+
+	<h1>Permission denied</h1>
+	<p>You do not have permission to view the items on this page, you must register or login before doing so, please
+		return home to login or click the link to register</p>
+
+	<!-- Button to go to the registration page -->
+	<form method="get" action="/register">
+		<button type="submit">Go to Registration Page</button>
+	</form>
+
+	<a href="/">Home</a>
+
+	<footer th:replace="~{fragment/footer :: footer}"></footer>
+</body>
+
+</html>

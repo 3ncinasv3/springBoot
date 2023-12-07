@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>CPU Details</title>
+	<link rel="stylesheet" href="/css/style.css">
+	<!-- Your CSS and other meta tags -->
+</head>
+
+<body>
+	<header th:insert="~{fragment/header :: header}"></header>
+	<div th:insert="~{fragment/nav :: nav}"></div>
+
+	<div th:if="${cpu}">
+		<h2 th:text="${cpu.model}"></h2> <!-- Display storage model -->
+		<p>Manufacturer: <span th:text="${cpu.manufacturer}"></span></p>
+		<p>Description: <span th:text="${cpu.description}"></span></p>
+		<p>Price: <span th:text="${cpu.price}"></span></p>
+		<p>Type: <span th:text="${cpu.speedGHz}"></span></p>
+		<!-- Add other details specific to storage -->
+	</div>
+
+	<a href="/secure/user/cart"	th:href="@{/secure/user/cart/cpu/} + ${cpu.id}">Add To Cart</a>
+
+	<a href="/secure/user/index">Home</a>
+
+	<footer th:replace="~{fragment/footer :: footer}"></footer>
+</body>
+
+</html>

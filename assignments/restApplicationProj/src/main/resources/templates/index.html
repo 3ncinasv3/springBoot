@@ -1,100 +1,87 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--    <title>Exchange Rates</title>-->
-<!--    <link href="@{/css/bootstrap.min.css}" rel="stylesheet">-->
-<!--</head>-->
-<!--<body>-->
-<!--<header th:insert="~{fragments/header.html :: header}"></header>-->
-<!--<div th:replace="${admin} ? ~{fragments/menu.html :: div.menu-admin} : ~{fragments/menu.html :: div.menu}"></div>-->
-<!--<h1>Exchange Rates</h1>-->
-
-<!--<form th:action="@{/convert}" method="post" th:object="${conversionForm}">-->
-<!--    <div>-->
-<!--        <label for="baseCurrency">Base Currency:</label>-->
-<!--        <select th:field="*{baseCurrency}" id="baseCurrency" required>-->
-<!--            <option th:each="currency : ${currencies}" th:value="${currency}" th:text="${currency}"></option>-->
-<!--        </select>-->
-<!--    </div>-->
-
-<!--    <div>-->
-<!--        <label for="amount">Amount:</label>-->
-<!--        <input type="number" th:field="*{amount}" id="amount" required>-->
-<!--    </div>-->
-
-<!--    <div>-->
-<!--        <label for="targetCurrency">Target Currency:</label>-->
-<!--        <select th:field="*{targetCurrency}" id="targetCurrency" required>-->
-<!--            <option th:each="currency : ${currencies}" th:value="${currency}" th:text="${currency}"></option>-->
-<!--        </select>-->
-<!--    </div>-->
-
-<!--    <div>-->
-<!--        <button type="submit">Convert</button>-->
-<!--    </div>-->
-<!--</form>-->
-
-<!--<table>-->
-<!--    &lt;!&ndash; Display exchange rates as before &ndash;&gt;-->
-<!--</table>-->
-
-<!--<div th:if="${conversionResult}">-->
-<!--    <p th:text="'Converted amount: ' + ${conversionResult} + ' ' + ${targetCurrency}"></p>-->
-<!--</div>-->
-
-<!--<footer th:replace="~{fragments/footer.html :: footer}"></footer>-->
-<!--</body>-->
-<!--</html>-->
-
-<!--this one works below!!-->
-
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="u-ua-compatible" content="ie=edge">
     <title>Exchange Rates</title>
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<!--    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">-->
+<!--    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">-->
+    <!-- <link rel="stylesheet" href="../static/css/bootstrap.css"> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="/css/custom.css" rel="stylesheet">
     <style>
+
         body {
             text-align: center;
+            padding-top: 60px;
         }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        table {
+            margin-top: 20px;
+        }
+
+        /* login success animation */
+        .login-success-animation {
+        background-color: #4CAF50; /* Green background */
+        color: white;
+        padding: 10px; /* Add padding for better visibility */
+        border-radius: 5px; /* Rounded corners */
+        position: absolute; /* Position it over the form */
+        top: 50%; /* Center it vertically */
+        left: 50%; /* Center it horizontally */
+        transform: translate(-50%, -50%); /* Center it precisely */
+        animation: fadeOut 2s ease; /* Add a fade-out animation */
+    }
+
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+        }
+        to {
+            opacity: 0;
+        }
+    }
+
     </style>
 
 </head>
 <body>
-<header th:insert="~{fragments/header.html :: header}"></header>
-<div th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
 
-    <!-- If authenticated, include the admin menu fragment -->
-    <div th:replace="~{fragments/menu.html :: div.user-menu}"></div>
-</div>
-<div th:unless="${#authorization.expression('isAuthenticated')}">
-    <!-- If not authenticated, include the regular menu fragment -->
-    <div th:replace="~{fragments/menu.html :: div.menu}"></div>
-</div>
-<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-    <div th:replace="~{fragments/menu.html :: div.admin-menu}"></div>
+    <header th:insert="~{fragments/header.html :: header}"></header>
 
-    <p>User has the role: ROLE_ADMIN</p>
-</div>
 
-<div sec:authorize="isAuthenticated()">
-    <h1>
-        Welcome,
-        <span th:text="${userName}"></span><br>
-    </h1>
-</div>
+    <div sec:authorize="isAnonymous()">
+        <div th:replace="~{fragments/menu.html :: div.menu}"></div>
+    </div>
+    <div th:if="${#authorization.expression('isAuthenticated()')}">
+        <div th:replace="~{fragments/menu.html :: div.user-menu}"></div>
+    </div>
+    <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+        <div th:replace="~{fragments/menu.html :: div.admin-menu}"></div>        
+    </div>
+
+    <div class="welcome"sec:authorize="isAuthenticated()">
+        <h1>
+            Welcome,
+            <span th:text="${userName}"></span><br>
+        </h1>
+    </div>
 
 
 
 <h2 class="mt-4 mb-4">Exchange Rates</h2>
 <p th:text=" 'BaseCurrency in : ' + ${baseCode}"></p>
+
 <form th:action="@{/changeBaseCurrency}" method="get">
     <label for="newBaseCurrency">Enter new base currency:</label>
     <!-- Use datalist for autocomplete -->
@@ -105,15 +92,16 @@
     </datalist>
     <button type="submit">Change Base Currency</button>
 </form>
+
 <div class="table-responsive">
-<table class="table table-bordered">
+<table class="table table-dark table-bordered table-striped table-hover table-sm">
     <thead>
     <tr>
         <th>Currency</th>
         <th>Exchange Rate</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody class="table-group-divider">
     <tr th:each="each : ${exchangeRates}">
         <td th:text="${each.key}"></td>
         <td th:text="${each.value}"></td>
@@ -124,8 +112,87 @@
 </div>
 
 <footer th:replace="~{fragments/footer.html :: footer}"></footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<!--<script src="../static/js/bootstrap.js"></script>-->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
 
+    function handleLogin(event) {
+          // Prevent the form from submitting immediately
+          event.preventDefault();
+
+// Get the form data
+    var formData = new FormData(event.target);
+
+// Make an asynchronous request to the server to check login
+    fetch('/login', {
+    method: 'POST',
+    body: formData
+    })
+        .then(response => {
+        if (response.ok) {
+        // Login successful, show success animation
+            showLoginSuccessAnimation();
+        } else {
+        // Login failed, show error message (customize as needed)
+            alert('Login failed. Please check your credentials.');
+        }
+})
+.catch(error => {
+    console.error('Error during login:', error);
+});
+        // Assume successful login for demonstration purposes
+        // You would replace this with your actual logic to check login success
+
+        // Show the success animation
+        // showLoginSuccessAnimation();
+
+        // Prevent the form from submitting (for demonstration purposes)
+        // return true;
+    }
+
+    function showLoginSuccessAnimation() {
+        // Get the placeholder element
+        var placeholder = document.getElementById('login-animation-placeholder');
+
+        // Create an animated element (you can customize this further)
+        var successElement = document.createElement('div');
+        successElement.textContent = 'Login successful!';
+        successElement.className = 'login-success-animation';
+
+        // Append the animated element to the placeholder
+        placeholder.appendChild(successElement);
+
+        // Remove the animated element after a delay (adjust as needed)
+        setTimeout(function () {
+            placeholder.removeChild(successElement);
+        }, 3000); // Remove after 3 seconds
+    }
+});
+</script>
+
+<script>
+function verify() {
+    var password1 = document.forms['form']['password'].value;
+    var password2 = document.forms['form']['verifyPassword'].value;
+    var username = document.forms['form']['username'].value;
+    if (password1.length < 7 || password1 == null || password1 == "" || password1 != password2) {
+        document.getElementById("error").innerHTML = "Please make sure your password is at least 7 characters long and matches the verification.";
+        return false;
+    }
+    if (username.length < 5) {
+        document.getElementById("error").innerHTML = "Please enter a valid email with at least 5 characters.";
+        return false;
+    }
+    var digitRegex = /\d/;
+    if (!digitRegex.test(password1)) {
+        document.getElementById("error").innerHTML = "Please include at least one digit in your password.";
+        return false;
+    }
+}
+</script>
 
 </body>
 </html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Memory Details</title>
+	<link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+	<header th:insert="~{fragment/header :: header}"></header>
+	<div th:insert="~{fragment/nav :: nav}"></div>
+
+	<h1>Memory Details</h1>
+
+	<div th:if="${memory}">
+		<h2 th:text="${memory.model}"></h2> <!-- Display storage model -->
+		<p>Manufacturer: <span th:text="${memory.manufacturer}"></span></p>
+		<p>Description: <span th:text="${memory.description}"></span></p>
+		<p>Price: <span th:text="${memory.price}"></span></p>
+		<p>Set Size in GB: <span th:text="${memory.sizeGB}"></span></p>
+		<p>Type: <span th:text="${memory.type}"></span></p>
+		<!-- Add other details specific to storage -->
+	</div>
+
+	<a href="/secure/user/cart">Add To Cart</a>
+	<a href="/secure/user/index">Home</a>
+	<footer th:replace="~{fragment/footer :: footer}"></footer>
+</body>
+
+</html>

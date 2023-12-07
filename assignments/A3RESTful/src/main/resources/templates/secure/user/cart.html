@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+
+</head>
+<body>
+<!--<div th:if="${session.cart != null and !session.cart.isEmpty()}">-->
+<h2>Your Cart:</h2>
+<table>
+    <tr>
+        <th>id</th>
+        <th>type</th>
+        <th>model</th>
+        <th>manufacturer</th>
+        <th>price</th>
+        <th>description</th>
+    </tr>
+    <tr th:each="item : ${session.cart}">
+        <td th:text="${item.id}"></td>
+        <td th:text="${item.type}"></td>
+        <td th:text="${item.model}"></td>
+        <td th:text="${item.manufacturer}"></td>
+        <td th:text="${item.price}"></td>
+        <td th:text="${item.description}"></td>
+<!--        <td th:href="@{'/secure/addToCart'}"-->
+<!--        <td><a th:href="@{'/secure/remove/'} + ${book.ISBN}">Remove</a></td>-->
+    </tr>
+</table>
+<!--<div class="total-price-container">-->
+<!--    <div th:if="${session.userCart != null and !session.userCart.isEmpty()}">-->
+<!--        <div th:with="books=${session.userCart}">-->
+<!--            <div th:with="totalPrice=${#aggregates.sum(books.![price])}">-->
+<!--                <p>Total Price: </p> <div th:text="'$' + ${totalPrice}"></div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+    <div th:if="${session.cart == null or session.cart.isEmpty()}">
+        <p>Your cart is empty</p>
+    </div>
+<!--</div>-->
+<!--<p><a th:href="@{/secure/index}">Keep Shopping</a></p>-->
+<!--<p><a th:href="@{/secure/pay}">Purchase cart</a></p>-->
+<button><a href="/secure/user/index">Home</a></button>
+
+</body>
+</html>

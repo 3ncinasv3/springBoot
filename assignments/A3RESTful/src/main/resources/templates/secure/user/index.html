@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<!-- Include your header fragment -->
+	<title>Home</title>
+	<link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+	<header th:insert="~{fragment/header :: header}"></header>
+	<div th:insert="~{fragment/nav :: nav}"></div>
+
+	<!-- Navigation links -->
+	<ul>
+		<li><a href="/secure/user/cpu">CPU</a></li>
+		<li><a href="/secure/user/graphicscard">Graphics Card</a></li>
+		<li><a href="/secure/user/memory">Memory</a></li>
+		<li><a href="/secure/user/motherboard">Motherboard</a></li>
+		<li><a href="/secure/user/storage">Storage</a></li>
+		<!-- Add more links for other components -->
+	</ul>
+
+	<footer th:replace="~{fragment/footer :: footer}"></footer>
+</body>
+
+</html>

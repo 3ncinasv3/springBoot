@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Register Page</title>
+        <style>
+        nav {
+            background-color: #f2f2f2;
+            overflow: hidden;
+        }
+
+        nav a {
+            float: left;
+            display: block;
+            color: black;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+    <script>
+    function verify() {
+        var password = document.forms["form"]["password"].value;
+        var verifyPassword = document.forms["form"]["verifyPassword"].value;
+
+        if (password !== verifyPassword) {
+            alert("Passwords do not match");
+            return false;
+        }
+        return true;
+    }
+</script>
+
+</head>
+
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/cart">Shopping Cart</a>
+    </nav>
+
+    <h1>Register Here!</h1>
+    <div id="error" class="error"></div>
+    <form name="form" action="/register" method="post" th:action="@{/register}" onsubmit="return verify()">
+        Email: <input type="email" name="username" /><br>
+        Password: <input type="password" name="password" /><br>
+        Verify Password: <input type="password" name="verifyPassword" /><br>
+        <input type="submit" value="Register">
+    </form>
+</body>
+
+</html>

@@ -2,55 +2,166 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>modMenu</title>
     <style>
-        .menu-admin, .menu {
-            display: flex;
-            justify-content: space-around;
-            background-color: #eee; /* Add your desired background color */
-            padding: 10px;
-        }
+        /*.menu-admin, .menu {*/
+        /*    display: flex;*/
+        /*    justify-content: space-around;*/
+        /*    background-color: #eee; !* Add your desired background color *!*/
+        /*    padding: 10px;*/
+        /*    margin-bottom: 500px;*/
+        /*}*/
 
-        .menu-admin span, .menu span {
-            margin: 0 10px;
-        }
+        /*.menu-admin span, .menu span {*/
+        /*    margin: 0 10px;*/
+        /*}*/
 
-        .menu-admin a, .menu a {
-            text-decoration: none;
-            color: #333; /* Add your desired color */
-        }
+        /*.menu-admin a, .menu a {*/
+        /*    text-decoration: none;*/
+        /*    color: #333; !* Add your desired color *!*/
+        /*}*/
     </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
 </head>
 <body>
 <div class="user-menu">
     <span><a href="/">Home</a></span>
-    <span><a href="/conversionRate">Conversion Rate</a></span>
-    <span><a href="/conversionCalculator">Conversion Calculator</a></span>
-    <span><a href="/stocks">Stocks</a></span>
+    <span><a href="../conversionRate">Conversion Rate</a></span>
+    <span><a href="../conversionCalculator">Conversion Calculator</a></span>
+    <span><a href="../stocks">Stocks</a></span>
+    <span><a href="../stocksAjax">myStocks</a></span>
 
 
-    <span><a href="#">Account</a></span>
-    <span><a href="/logout">Logout</a></span>
+    <span><a href="../secure/user/account">Account</a></span>
+<!--    <span><a href="../logout">Logout</a></span>-->
+    <button type="button" class="btn btn-dark">
+        <a href="/logout" style="color: inherit; text-decoration: inherit;">Logout</a>
+    </button>
+
+
 
 </div>
 <div class="menu">
     <span><a href="/">Home</a></span>
-    <span><a href="/conversionRate">Conversion Rate</a></span>
-    <span><a href="/conversionCalculator">Conversion Calculator</a></span>
-<!--    <span><a href="/stocks">Stocks</a></span>-->
+    <span><a href="../conversionRate">Conversion Rate</a></span>
+    <span><a href="../conversionCalculator">Conversion Calculator</a></span>
+    <dialog id="r" th:if="${#authorization.expression('isAnonymous')}">
+        <div>
+            <div id="error" class="error"></div>
+            <form name="form" action="#" th:action="@{/register}" method="post" onsubmit="return verify()">
+                Email: <input type="email" name="username" /><br>
+                Firstname: <input type="text" name="firstName" /> <br>
+                Password: <input type="password" name="password" /><br>
+                Verify Password: <input type="password" name="verifyPassword" /><br>
+                <input type="submit" value="Register">
+            </form>
+        </div>
+        <button type="button" class="btn-close" onclick="r.close()"></button>
+    </dialog>
+    <button type="button" class="btn btn-dark position-relative" onclick="r.showModal()">
+        Register
+<!--        <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">-->
+<!--        <span class="visually-hidden">New alerts</span>-->
+<!--        </span>-->
+    </button>
 
-    <span><a href="/register">Register</a></span>
-    <span><a href="/login">Login</a></span>
+    <dialog id="d" th:if="${#authorization.expression('isAnonymous')}">
+        <div id="login-animation-placeholder"></div>
+        <div>
+     
+            <form th:action="@{/login}" method="post" onsubmit="return handleLogin()">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <br>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <br>
+                <input type="submit" value="Login">
+            </form>
+            <!-- OAuth2 login options -->
+            <a th:href="@{/oauth2/authorization/google}">Login with Google</a>
+        </div>
+        <button type="button" class="btn-close" onclick="d.close()"></button>
+    </dialog>
+    <button type="button" class="btn btn-dark position-relative" onclick="d.showModal()">
+        Login
+        <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+        <span class="visually-hidden">New alerts</span>
+        </span>
+    </button>
 </div>
+    <!-- <dialog id="r">
+        <div sec:authorize="isAnonymous()">
+            <form name="form" action="#" th:action="@{/register}" method="post" onsubmit="return verify()">
+                <label for="username">Email:</label>
+                <input type="email" name="username" /><br>
+                <label for="username">Firstname:</label>
+                <input type="text" name="firstName" /> <br>
+                <label for="username">Password:</label>
+                <input type="password" name="password" /><br>
+                <label for="username">Verify Password:</label>
+                <input type="password" name="verifyPassword" /><br>
+                <input type="submit" value="Register">
+            </form>
+        </div>
+        <button onclick="r.close()">Close Dialog</button>
+    </dialog>
+    <button onclick="r.showModal()">Register</button>
+    </div>
+
+
+    <dialog id="d">
+        <div sec:authorize="isAnonymous()">
+            <form th:action="@{/login}" method="post">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <br>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <br>
+                <button type="submit">Login</button>
+            </form>
+            <a th:href="@{/oauth2/authorization/google}">Login with Google</a>
+        </div>
+        <button onclick="d.close()">Close Dialog</button>
+    </dialog>
+    <button onclick="d.showModal()">Login</button>
+</div> -->
+
 <div class="admin-menu">
-    <span><a href="/">Home</a></span>
-    <span><a href="/conversionRate">Conversion Rate</a></span>
-    <span><a href="/conversionCalculator">Conversion Calculator</a></span>
-    <span><a href="/stocks">Stocks</a></span>
-
     <span><a href="#">User Accounts</a></span>
-    <span><a href="/logout">Logout</a></span>
 </div>
+
+<div class="authenticated-menu">
+    <button type="button" class="btn"><span><a href="/logout">Logout</a></span></button>
+</div>
+
+<script>
+    function verify() {
+        var password1 = document.forms['form']['password'].value;
+        var password2 = document.forms['form']['verifyPassword'].value;
+        var username = document.forms['form']['username'].value;
+        if (password1.length < 7 || password1 == null || password1 == "" || password1 != password2) {
+            document.getElementById("error").innerHTML = "Please make sure your password is at least 7 characters long and matches the verification.";
+            return false;
+        }
+        if (username.length < 5) {
+            document.getElementById("error").innerHTML = "Please enter a valid email with at least 5 characters.";
+            return false;
+        }
+        var digitRegex = /\d/;
+        if (!digitRegex.test(password1)) {
+            document.getElementById("error").innerHTML = "Please include at least one digit in your password.";
+            return false;
+        }
+    }
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+
 
 </body>
 </html>

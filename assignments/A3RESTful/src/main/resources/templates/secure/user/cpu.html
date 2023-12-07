@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>CPU Components</title>
+	<link rel="stylesheet" href="/css/style.css">
+	<!-- Your CSS and other meta tags -->
+</head>
+
+<body>
+	<header th:insert="~{fragment/header :: header}"></header>
+	<div th:insert="~{fragment/nav :: nav}"></div>
+
+	<!-- Navigation bar -->
+	<!--    <div th:replace="${Admin} ?~{fragments/menu.html :: div.menu-admin} :~{fragments/menu.html :: div.menu}"></div>-->
+
+	<!-- Main content for CPU components -->
+	<h1>CPU Components</h1>
+	<!----> Display a list of CPUs
+	<ul>
+		<li th:each="cpu : ${cpus}">
+			<a th:href="@{'/secure/user/cpu/' + ${cpu.id}}" th:text="${cpu.model}"></a>
+		</li>
+	</ul>
+	
+		<a href="/secure/user/index">Home</a>
+
+	<footer th:replace="~{fragment/footer :: footer}"></footer>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Motherboard</title>
+	<link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+	<header th:insert="~{fragment/header :: header}"></header>
+	<div th:insert="~{fragment/nav :: nav}"></div>
+
+	<h1>Motherboard Page</h1>
+
+	<!-- Display list of Motherboards -->
+	<ul>
+		<li th:each="motherboard : ${motherboards}">
+			<a th:href="@{'/secure/user/motherboard/' + ${motherboard.id}}"> <!-- Link to motherboard details page -->
+				<span th:text="${motherboard.model}"></span> <!-- Display motherboard model -->
+				<!-- Add other details like manufacturer, price, socketType -->
+			</a>
+		</li>
+	</ul>
+
+	<a href="/secure/user/index">Home</a>
+	<footer th:replace="~{fragment/footer :: footer}"></footer>
+</body>
+
+</html>
